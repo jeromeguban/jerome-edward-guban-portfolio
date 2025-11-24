@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+    cursor: auto;
+    background: linear-gradient(135deg, #1a1534 0%, #2d1b4e 25%, #3d2463 50%, #4a2c6f 75%, #3d2463 100%);
+    background-attachment: fixed;
+    color: #ffffff;
+  }
+
+  /* Show default cursor on mobile/touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    body {
+      cursor: auto;
+    }
+    .cursor-dot {
+      display: none;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1534;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* Cursor styles */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #a78bfa;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+}
+
+.cursor-dot.hover {
+  transform: scale(1.5);
+  background-color: #7c3aed;
+  opacity: 0.8;
+}
+
+/* Selection */
+::selection {
+  background-color: #7c3aed;
+  color: white;
+}
+
