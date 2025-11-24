@@ -12,6 +12,7 @@ import { navbarAnimation } from '@/lib/animations'
  */
 export default function Navigation() {
   const [hidden, setHidden] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { scrollY } = useScroll()
   const [lastScrollY, setLastScrollY] = useState(0)
 
@@ -33,6 +34,11 @@ export default function Navigation() {
 
   const handleNavClick = (href: string) => {
     scrollToElement(href)
+    setMobileMenuOpen(false) // Close mobile menu after navigation
+  }
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen)
   }
 
   return (
@@ -46,7 +52,7 @@ export default function Navigation() {
           {/* Logo - MART style */}
           <motion.button
             onClick={() => scrollToElement('hero')}
-            className="text-4xl font-black tracking-tight text-white hover:text-purple-300 transition-colors"
+            className="hidden md:block text-4xl font-black tracking-tight text-white hover:text-purple-300 transition-colors"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -55,6 +61,9 @@ export default function Navigation() {
             </span>
             <span className="text-purple-400 ml-1">.</span>
           </motion.button>
+
+          {/* Spacer for mobile - pushes hamburger to the right */}
+          <div className="md:hidden flex-1"></div>
 
           {/* Navigation Links */}
           <ul className="hidden md:flex items-center gap-12">
@@ -78,15 +87,49 @@ export default function Navigation() {
           </ul>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden text-white p-2">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="3" y1="12" x2="21" y2="12"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
+          <button 
+            onClick={toggleMobileMenu}
+            className="md:hidden text-white p-2 z-50 relative"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
+            )}
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <motion.div
+        initial={{ x: '100%' }}
+        animate={{ x: mobileMenuOpen ? 0 : '100%' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="fixed top-0 right-0 bottom-0 w-full md:hidden bg-gradient-to-br from-gray-900 via-purple-900/90 to-gray-900 backdrop-blur-lg z-40"
+      >
+        <div className="flex flex-col items-center justify-center h-full gap-8 px-8">
+          {navigation.map((item, index) => (
+            <motion.button
+              key={item.name}
+              onClick={() => handleNavClick(item.href)}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: mobileMenuOpen ? 1 : 0, x: mobileMenuOpen ? 0 : 50 }}
+              transition={{ delay: index * 0.1 }}
+              className="text-3xl font-bold text-white hover:text-purple-300 transition-colors"
+            >
+              {item.name}
+            </motion.button>
+          ))}
+        </div>
+      </motion.div>
     </motion.nav>
   )
 }

@@ -64,7 +64,7 @@ export default function Hero() {
             className="relative bg-white/5 backdrop-blur-lg rounded-[2.5rem] p-10 md:p-12 border-2 border-white/20 shadow-2xl"
           >
             {/* Open To Work Badge */}
-            <div className="mb-8">
+            <div className="mb-8 flex justify-center md:justify-start">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/20">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                 Open To Work
@@ -72,24 +72,24 @@ export default function Hero() {
             </div>
 
             {/* Name with Gradient */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight text-center md:text-left">
               <span className="bg-gradient-to-r from-blue-200 via-purple-300 to-pink-300 bg-clip-text text-transparent">
                 {personalInfo.name}
               </span>
             </h1>
 
             {/* Job Title */}
-            <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 mb-6">
+            <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 mb-6 text-center md:text-left">
               {personalInfo.title}
             </h2>
 
             {/* Description */}
-            <p className="text-lg text-gray-300 leading-relaxed mb-8">
+            <p className="text-lg text-gray-300 leading-relaxed mb-8 text-center md:text-left">
               <span className="text-2xl font-bold text-white">6+ years</span> building robust backend architectures. Expert in APIs, databases, and scalable server-side systems. Focused on clean code, reliability, and performance.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-10">
+            <div className="flex flex-wrap gap-4 mb-10 justify-center md:justify-start">
               <motion.button
                 onClick={() => scrollToElement('projects')}
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2"
@@ -114,7 +114,7 @@ export default function Hero() {
             </div>
 
             {/* Social Icons */}
-            <div className="flex gap-4 pt-6 border-t border-white/10">
+            <div className="flex gap-4 pt-6 border-t border-white/10 justify-center md:justify-start">
              
               
               <motion.a
