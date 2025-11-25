@@ -80,8 +80,26 @@ export default function Experience() {
   }
 
   return (
-    <section id="experience" className="py-24 px-6 bg-transparent relative">
-      <div className="max-w-6xl mx-auto">
+    <section
+      id="experience"
+      className="py-24 px-6 relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(to bottom, #000000 0%, #0B0B12 100%)',
+      }}
+    >
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
+        }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.65) 100%)',
+        }}
+      />
+      <div className="max-w-6xl mx-auto relative z-10">
         <SectionTitle>Experience</SectionTitle>
 
         <div className="relative mt-16">

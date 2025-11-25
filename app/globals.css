@@ -66,6 +66,32 @@
   z-index: 9999;
   transition: transform 0.15s ease, opacity 0.15s ease;
   box-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+  overflow: visible;
+}
+
+.cursor-dot::before,
+.cursor-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.3;
+}
+
+.cursor-dot::before {
+  width: 4rem;
+  height: 4rem;
+  box-shadow: 0 0 20px rgba(167, 139, 250, 0.25);
+}
+
+.cursor-dot::after {
+  width: 8rem;
+  height: 8rem;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 40px rgba(167, 139, 250, 0.15);
 }
 
 .cursor-dot.hover {
