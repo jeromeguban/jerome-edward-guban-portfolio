@@ -128,7 +128,7 @@ export const projects = [
       'E-commerce website for Recherche',
     image: '/images/9.png',
     technologies: ['Laravel', 'PHP', 'MySQL', 'React.js', 'Tailwind css', 'Rest APIs', 'Axios'],
-    liveUrl: '#',
+    liveUrl: 'https://recherche.com.ph/',
     githubUrl: '#',
   },
   {
@@ -138,7 +138,7 @@ export const projects = [
       'Content management system for Recherche E-commerce',
     image: '/images/10.png',
     technologies: ['Laravel', 'PHP', 'MySQL', 'Vue.js', 'Tailwind css', 'Rest APIs', 'Axios'],
-    liveUrl: 'https://recherche.com.ph/',
+    liveUrl: '#',
     githubUrl: '#',
   },
   {
