@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
 /**
- * About section with scroll-based lyric-style animation
- * Text fades and highlights as you scroll like music lyrics
+ * Premium About section with cinematic design
+ * High-quality hero section with neon gradients and elegant animations
  */
 export default function About() {
   const containerRef = useRef<HTMLElement>(null)
@@ -26,37 +26,86 @@ export default function About() {
   ]
 
   return (
-    <section ref={containerRef} id="about" className="min-h-screen py-32 px-6 bg-black relative">
-      <div className="max-w-5xl mx-auto">
+    <section 
+      ref={containerRef} 
+      id="about" 
+      className="min-h-screen py-32 px-6 relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(to bottom, #000000 0%, #0B0B12 100%)',
+      }}
+    >
+      {/* Radial Glow Background */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
+        }}
+      />
+      
+      {/* Vignette Effect */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%)',
+        }}
+      />
+
+      <div className="max-w-6xl mx-auto relative z-10">
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
         >
-          <p className="text-gray-500 text-sm uppercase tracking-widest mb-4">ABOUT ME</p>
-          <h2 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-blue-300 via-purple-300 to-blue-300 bg-clip-text text-transparent">
+          {/* Subtitle */}
+          <p 
+            className="text-gray-400 text-xs md:text-sm uppercase tracking-[0.3em] mb-6 font-light"
+            style={{
+              letterSpacing: '0.3em',
+            }}
+          >
+            ABOUT ME
+          </p>
+          
+          {/* Main Title */}
+          <h2 
+            className="text-6xl md:text-8xl lg:text-9xl font-black uppercase mb-8"
+            style={{
+              background: 'linear-gradient(135deg, #E0C3FC 0%, #8EC5FC 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 0 40px rgba(224, 195, 252, 0.3))',
+            }}
+          >
             MY STORY
           </h2>
         </motion.div>
 
-        {/* Story Lines - Lyrics Style */}
-        <div className="space-y-12">
+        {/* Story Lines - Premium Style */}
+        <div className="space-y-16 mt-20">
           {storyLines.map((line, index) => {
             const start = index / storyLines.length
             const end = (index + 1) / storyLines.length
 
             const opacity = useTransform(
               scrollYProgress,
-              [start, end, end + 0.2],
-              [1, 1, 0.3]
+              [start, end, end + 0.15],
+              [0.4, 1, 0.3]
             )
 
             const y = useTransform(
               scrollYProgress,
-              [start, end, end + 0.2],
-              [0, 0, -30]
+              [start, end, end + 0.15],
+              [20, 0, -20]
+            )
+
+            const scale = useTransform(
+              scrollYProgress,
+              [start, end, end + 0.15],
+              [0.98, 1, 0.98]
             )
 
             return (
@@ -65,9 +114,14 @@ export default function About() {
                 style={{ 
                   opacity, 
                   y,
-                  textShadow: '0 0 20px rgba(147, 197, 253, 0.5), 0 0 40px rgba(147, 197, 253, 0.3)'
+                  scale,
+                  background: 'linear-gradient(135deg, #A78BFA 0%, #C4B5FD 50%, #93C5FD 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 30px rgba(167, 139, 250, 0.4))',
                 }}
-                className="text-2xl md:text-3xl lg:text-4xl leading-relaxed text-center font-semibold bg-gradient-to-r from-blue-300 via-blue-200 to-blue-300 bg-clip-text text-transparent"
+                className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-relaxed text-center px-4"
               >
                 {line}
               </motion.p>
@@ -75,17 +129,25 @@ export default function About() {
           })}
         </div>
 
+        {/* Fade Effect at Bottom */}
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to top, #0B0B12 0%, transparent 100%)',
+          }}
+        />
+
         {/* Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-32"
+          className="text-center mt-40 relative z-10"
         >
-          <p className="text-gray-500 text-sm uppercase tracking-widest mb-4">SCROLL</p>
+          <p className="text-gray-500 text-xs uppercase tracking-[0.3em] mb-6">SCROLL</p>
           <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             className="inline-block"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-500">

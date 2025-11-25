@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { personalInfo } from '@/data/portfolio'
 import Button from '@/components/Button'
@@ -12,6 +13,25 @@ import { scrollToElement } from '@/lib/utils'
  * Features staggered animations for headline, subtitle, and CTA buttons
  */
 export default function Hero() {
+  const [typedText, setTypedText] = useState('')
+  const [isTypingComplete, setIsTypingComplete] = useState(false)
+  const fullText = personalInfo.title
+  
+  useEffect(() => {
+    let index = 0
+    const typingInterval = setInterval(() => {
+      if (index <= fullText.length) {
+        setTypedText(fullText.slice(0, index))
+        index++
+      } else {
+        setIsTypingComplete(true)
+        clearInterval(typingInterval)
+      }
+    }, 100) // Adjust speed here (lower = faster)
+    
+    return () => clearInterval(typingInterval)
+  }, [fullText])
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden">
       <FloatingShapes />
@@ -79,8 +99,9 @@ export default function Hero() {
             </h1>
 
             {/* Job Title */}
-            <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 mb-6 text-center md:text-left">
-              {personalInfo.title}
+            <h2 className="text-3xl md:text-4xl font-semibold text-blue-200 text-center md:text-left min-h-[3rem] md:min-h-[3.5rem]">
+              {typedText}
+              {!isTypingComplete && <span className="animate-pulse ml-1">|</span>}
             </h2>
 
             {/* Description */}
@@ -210,7 +231,7 @@ export default function Hero() {
                   {/* Logo container */}
                   <div className="relative w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" className="w-full h-full">
-                      <defs><radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(84.04136 0 0 84.04136 38.426 42.169)" gradientUnits="userSpaceOnUse"><stop stop-color="#AEB2D5"/><stop offset=".3" stop-color="#AEB2D5"/><stop offset=".75" stop-color="#484C89"/><stop offset="1" stop-color="#484C89"/></radialGradient></defs>
+                      <defs><radialGradient id="a" cx="0" cy="0" r="1" gradientTransform="matrix(84.04136 0 0 84.04136 38.426 42.169)" gradientUnits="userSpaceOnUse"><stop stopColor="#AEB2D5"/><stop offset=".3" stopColor="#AEB2D5"/><stop offset=".75" stopColor="#484C89"/><stop offset="1" stopColor="#484C89"/></radialGradient></defs>
                       <path fill="url(#a)" d="M0 64c0 18.593 28.654 33.667 64 33.667 35.346 0 64-15.074 64-33.667 0-18.593-28.655-33.667-64-33.667C28.654 30.333 0 45.407 0 64Z"/>
                       <path fill="#777bb3" d="M64 95.167c33.965 0 61.5-13.955 61.5-31.167 0-17.214-27.535-31.167-61.5-31.167S2.5 46.786 2.5 64c0 17.212 27.535 31.167 61.5 31.167Z"/>
                       <path fill="#fff" d="M34.19 55.826h3.891c3.107 0 4.186.682 4.553 1.089.607.674.723 2.097.331 4.112-.439 2.257-1.253 3.858-2.42 4.756-1.194.92-3.138 1.386-5.773 1.386h-2.786l2.205-11.342zm6.674-8.1H26.731a1.39 1.39 0 0 0-1.364 1.123L18.81 82.588a1.39 1.39 0 0 0 1.363 1.653h7.35a1.39 1.39 0 0 0 1.363-1.124l1.525-7.846h5.151c2.912 0 5.364-.318 7.287-.944 1.977-.642 3.796-1.731 5.406-3.237a16.522 16.522 0 0 0 3.259-4.087c.831-1.487 1.429-3.147 1.775-4.931.86-4.423.161-7.964-2.076-10.524-2.216-2.537-5.698-3.823-10.349-3.823zM69.459 74.577a.694.694 0 0 1-.682-.827l2.9-14.928c.277-1.42.209-2.438-.19-2.87-.245-.263-.979-.704-3.15-.704h-5.256l-3.646 18.768a.695.695 0 0 1-.683.56h-7.29a.695.695 0 0 1-.683-.826l6.558-33.739a.695.695 0 0 1 .682-.561h7.29a.695.695 0 0 1 .683.826L64.41 48.42h5.653c4.307 0 7.227.758 8.928 2.321 1.733 1.593 2.275 4.14 1.608 7.573l-3.051 15.702a.695.695 0 0 1-.682.56h-7.407zM91.555 55.826h3.891c3.107 0 4.186.682 4.552 1.089.61.674.724 2.097.333 4.112-.44 2.257-1.254 3.858-2.421 4.756-1.195.92-3.139 1.386-5.773 1.386h-2.786l2.204-11.342zm6.674-8.1H84.096a1.39 1.39 0 0 0-1.363 1.123l-6.558 33.739a1.39 1.39 0 0 0 1.364 1.653h7.35a1.39 1.39 0 0 0 1.363-1.124l1.525-7.846h5.15c2.911 0 5.364-.318 7.286-.944 1.978-.642 3.797-1.731 5.408-3.238a16.52 16.52 0 0 0 3.258-4.086c.832-1.487 1.428-3.147 1.775-4.931.86-4.423.162-7.964-2.076-10.524-2.216-2.537-5.697-3.823-10.35-3.823z"/>

@@ -48,7 +48,7 @@ export const projects = [
     description:
       'E-commerce and Online Bidding website for HMR Philippines Inc.',
     image: '/images/project1.jpg',
-    technologies: ['Laravel', 'PHP', 'MySQL', 'Vue.js', 'Elasticsearch', 'Redis', 'Tailwind css', 'Rest APIs', 'Node.js', 'Elasticsearch', 'Axios', 'Cron'],
+    technologies: ['Laravel', 'PHP', 'MySQL', 'Vue.js', 'Elasticsearch', 'Redis', 'Tailwind css', 'Rest APIs', 'Node.js', 'Axios', 'Cron'],
     liveUrl: 'https://hmr.ph/#/',
   },
   {
