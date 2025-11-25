@@ -121,8 +121,9 @@ export default function Hero() {
                 <span>→</span>
               </motion.button>
               
-              <motion.button
-                onClick={() => scrollToElement('contact')}
+              <motion.a
+                href="/files/Jerome_Edward_Guban_CV.pdf"
+                download="Jerome_Edward_Guban_CV.pdf"
                 className="px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-200 flex items-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -131,7 +132,7 @@ export default function Hero() {
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                 </svg>
                 Download Resume
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Social Icons */}
@@ -374,6 +375,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+
               <motion.div
                 className="absolute top-4 left-20"
                 animate={{
@@ -388,8 +390,8 @@ export default function Hero() {
                 }}
               >
                 <div className="relative">
-                  {/* Medium circle background */}
-                  <div className="absolute inset-0 w-30 h-30 -translate-x-8 -translate-y-8 rounded-full border border-white/10 opacity-30"></div>
+                  {/* Large circle background */}
+                  <div className="absolute inset-0 w-32 h-32 -translate-x-9 -translate-y-9 rounded-full border border-white/10 opacity-30"></div>
                   {/* Logo container */}
                   <div className="relative w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl p-2 border border-white/20 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 133" className="w-full h-full">
@@ -398,6 +400,7 @@ export default function Hero() {
                   </div>
                 </div>
               </motion.div>
+
 
               <motion.div
                 className="absolute bottom-12 -left-8"

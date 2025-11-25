@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: 'Jerome Edward Guban - Portfolio',
   description: 'Backend Developer',
   metadataBase: new URL('https://jerome-edward-guban-portfolio.vercel.app'),
+  icons: {
+    icon: '/images/logo.png',
+    shortcut: '/images/logo.png',
+    apple: '/images/logo.png',
+  },
   openGraph: {
     title: 'Jerome Edward Guban - Portfolio',
     description: 'Backend Developer',
