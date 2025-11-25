@@ -46,7 +46,7 @@ export default function Projects() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
-                      className="absolute inset-0 bg-gray-900/80 flex items-center justify-center gap-4"
+                      className="absolute inset-0 bg-gray-900/80 flex items-center justify-center gap-4 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300"
                     >
                       {project.liveUrl && project.liveUrl !== '#' && (
                         <motion.a
@@ -55,7 +55,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors"
+                          className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors touch-manipulation"
                         >
                           <ExternalLink size={20} />
                         </motion.a>
@@ -67,7 +67,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-gray-900 hover:bg-white transition-colors"
+                          className="p-3 bg-white/90 backdrop-blur-sm rounded-full text-gray-900 hover:bg-white transition-colors touch-manipulation"
                         >
                           <Github size={20} />
                         </motion.a>
