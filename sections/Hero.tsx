@@ -35,7 +35,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-6"
     >
       <FloatingShapes />
 
@@ -365,6 +365,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* REACT */}
               <motion.div
                 className="absolute top-40 -left-12"
                 animate={{
@@ -397,6 +398,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* JS */}
               <motion.div
                 className="absolute top-10 right-8"
                 animate={{
@@ -433,6 +435,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* VUE JS */}
               <motion.div
                 className="absolute -bottom-4 right-16"
                 animate={{
@@ -473,6 +476,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* Mysql */}
               <motion.div
                 className="absolute bottom-48 left-4"
                 animate={{
@@ -505,6 +509,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* Laravel */}
               <motion.div
                 className="absolute top-4 left-20"
                 animate={{
@@ -537,6 +542,7 @@ export default function Hero() {
                 </div>
               </motion.div>
 
+              {/* Elastic */}
               <motion.div
                 className="absolute bottom-12 -left-8"
                 animate={{

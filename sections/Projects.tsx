@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { projects } from '@/data/portfolio'
-import SectionTitle from '@/components/SectionTitle'
-import { ExternalLink, Github } from 'lucide-react'
-import { fadeInUp } from '@/lib/animations'
+import { motion } from "framer-motion";
+import { projects } from "@/data/portfolio";
+import SectionTitle from "@/components/SectionTitle";
+import { ExternalLink, Github } from "lucide-react";
+import { fadeInUp } from "@/lib/animations";
 
 /**
  * Projects section with grid layout and hover effects
@@ -13,7 +13,10 @@ import { fadeInUp } from '@/lib/animations'
  */
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-6 bg-transparent">
+    <section
+      id="projects"
+      className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-24 px-6"
+    >
       <div className="max-w-7xl mx-auto">
         <SectionTitle>Featured Projects</SectionTitle>
 
@@ -24,7 +27,7 @@ export default function Projects() {
               variants={fadeInUp}
               initial="initial"
               whileInView="animate"
-              viewport={{ once: true, margin: '-100px' }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: index * 0.1 }}
               className="group"
             >
@@ -35,20 +38,21 @@ export default function Projects() {
               >
                 {/* Project Image */}
                 <div className="relative aspect-video bg-gradient-to-br from-purple-900/30 to-blue-900/30 overflow-hidden">
-                  <img 
-                    src={project.image} 
+                  <img
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover"
                   />
-                  
+
                   {/* Hover overlay with links */}
-                  {(project.liveUrl && project.liveUrl !== '#') || (project.githubUrl && project.githubUrl !== '#') ? (
+                  {(project.liveUrl && project.liveUrl !== "#") ||
+                  (project.githubUrl && project.githubUrl !== "#") ? (
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                       className="absolute inset-0 bg-gray-900/80 flex items-center justify-center gap-4 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300"
                     >
-                      {project.liveUrl && project.liveUrl !== '#' && (
+                      {project.liveUrl && project.liveUrl !== "#" && (
                         <motion.a
                           href={project.liveUrl}
                           target="_blank"
@@ -60,7 +64,7 @@ export default function Projects() {
                           <ExternalLink size={20} />
                         </motion.a>
                       )}
-                      {project.githubUrl && project.githubUrl !== '#' && (
+                      {project.githubUrl && project.githubUrl !== "#" && (
                         <motion.a
                           href={project.githubUrl}
                           target="_blank"
@@ -103,6 +107,5 @@ export default function Projects() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
