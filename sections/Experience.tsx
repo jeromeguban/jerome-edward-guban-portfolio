@@ -1,102 +1,103 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { experiences } from '@/data/portfolio'
-import SectionTitle from '@/components/SectionTitle'
-import { sectionReveal, fadeInUp } from '@/lib/animations'
-import { Calendar, MapPin, ChevronDown, Key, Code, Trophy, TrendingUp } from 'lucide-react'
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { experiences } from "@/data/portfolio";
+import SectionTitle from "@/components/SectionTitle";
+import { sectionReveal, fadeInUp } from "@/lib/animations";
+import {
+  Calendar,
+  MapPin,
+  ChevronDown,
+  Key,
+  Code,
+  Trophy,
+  TrendingUp,
+} from "lucide-react";
 
 /**
  * Experience section with premium timeline design
  * Expandable cards with achievements and technologies
  */
 export default function Experience() {
-  const [expandedCards, setExpandedCards] = useState<number[]>([])
+  const [expandedCards, setExpandedCards] = useState<number[]>([]);
 
   const toggleCard = (id: number) => {
-    setExpandedCards(prev =>
-      prev.includes(id) ? prev.filter(cardId => cardId !== id) : [...prev, id]
-    )
-  }
+    setExpandedCards((prev) =>
+      prev.includes(id) ? prev.filter((cardId) => cardId !== id) : [...prev, id]
+    );
+  };
 
   const experienceIcons = [
-    { icon: Trophy, color: 'text-green-400', glow: 'rgba(34, 197, 94, 0.5)' },
-    { icon: TrendingUp, color: 'text-purple-400', glow: 'rgba(168, 85, 247, 0.5)' },
-  ]
+    { icon: Trophy, color: "text-green-400", glow: "rgba(34, 197, 94, 0.5)" },
+    {
+      icon: TrendingUp,
+      color: "text-purple-400",
+      glow: "rgba(168, 85, 247, 0.5)",
+    },
+  ];
 
-  const getAchievements = (description: string, experienceId: number): string[] => {
+  const getAchievements = (
+    description: string,
+    experienceId: number
+  ): string[] => {
     // Custom achievements based on experience
     if (experienceId === 1) {
       return [
-        'Successfully designed, deployed, and maintained :',
+        "Successfully designed, deployed, and maintained :",
 
-        'HRIS (Human Resource Information System)', 
+        "HRIS (Human Resource Information System) : Streamlined employee data management, payroll processing, and leave tracking.",
 
-        'Streamlined employee data management, payroll processing, and leave tracking.',
+        "Virtual Calling Card System : Enabled seamless communication and networking for employees and clients.",
 
-        'Virtual Calling Card System :',
+        "Inventory Management System : Optimized stock tracking, procurement, and reporting for efficient warehouse management.",
 
-        'Enabled seamless communication and networking for employees and clients.',
-
-        'Inventory Management System :',
-
-        'Optimized stock tracking, procurement, and reporting for efficient warehouse management.',
-      ]
+        "E-commerce System : Developed an e-commerce platform and its CMS for Cosmetic Products.",
+      ];
     } else if (experienceId === 2) {
       return [
-        'Software Development :',
+        "Software Development : Developed high-quality, testable, and efficient code by following best practices, including SOLID principles, thorough code reviews, and continuous integration/deployment strategies.",
 
-        'Developed high-quality, testable, and efficient code by following best practices, including SOLID principles, thorough code reviews, and continuous integration/deployment strategies.',
+        "Back-End Integration : Integrated multiple back-end services and databases to ensure smooth data flow and system communication, enhancing overall application performance and functionality.",
 
-        'Back-End Integration :',
+        "Emerging Technologies : Kept up with industry trends and emerging technologies, applying innovative solutions to improve system scalability, performance, and maintainability.",
 
-        'Integrated multiple back-end services and databases to ensure smooth data flow and system communication, enhancing overall application performance and functionality.',
+        "Compliance & Strategy Development : Designed modules and strategies to maintain compliance with evolving company standards, effectively addressing regulatory and industry changes.",
 
-        'Emerging Technologies :',
+        "E-commerce & Warehouse Management Systems : Configured, upgraded, and maintained e-commerce platforms with online bidding functionalities, warehouse management systems, user account management, and reporting tools for production and accounting teams.",
 
-        'Kept up with industry trends and emerging technologies, applying innovative solutions to improve system scalability, performance, and maintainability.',
+        "CRM Integrations : Integrated CRM systems to optimize customer interactions, enhance sales and marketing workflows, and improve overall customer satisfaction.",
 
-        'Compliance & Strategy Development :',
-
-        'Designed modules and strategies to maintain compliance with evolving company standards, effectively addressing regulatory and industry changes.',
-
-        'E-commerce & Warehouse Management Systems :',
-
-        'Configured, upgraded, and maintained e-commerce platforms with online bidding functionalities, warehouse management systems, user account management, and reporting tools for production and accounting teams.',
-
-        'CRM Integrations :',
-
-        'Integrated CRM systems to optimize customer interactions, enhance sales and marketing workflows, and improve overall customer satisfaction.',
-
-        'User Training & Support :', 
-
-        'Led training sessions for end users on new system applications, facilitating smooth transitions to updated software and ensuring effective user adoption.',
-      ]
+        "User Training & Support : Led training sessions for end users on new system applications, facilitating smooth transitions to updated software and ensuring effective user adoption.",
+      ];
     }
     // Fallback: Extract from description
-    const sentences = description.split(/[.!?]+/).filter(s => s.trim().length > 20)
-    return sentences.slice(0, 5).map(s => s.trim())
-  }
+    const sentences = description
+      .split(/[.!?]+/)
+      .filter((s) => s.trim().length > 20);
+    return sentences.slice(0, 5).map((s) => s.trim());
+  };
 
   return (
     <section
       id="experience"
       className="py-24 px-6 relative overflow-hidden"
       style={{
-        background: 'linear-gradient(to bottom, #000000 0%, #0B0B12 100%)',
+        background: "linear-gradient(to bottom, #000000 0%, #0B0B12 100%)",
       }}
     >
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at center, rgba(139, 92, 246, 0.12) 0%, transparent 70%)',
+          background:
+            "radial-gradient(circle at center, rgba(139, 92, 246, 0.12) 0%, transparent 70%)",
         }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.65) 100%)',
+          background:
+            "radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.65) 100%)",
         }}
       />
       <div className="max-w-6xl mx-auto relative z-10">
@@ -105,23 +106,33 @@ export default function Experience() {
         <div className="relative mt-16">
           {/* Vertical Timeline Line */}
           <div className="absolute left-8 top-0 bottom-0 w-0.5 hidden md:block">
-            <div 
+            <div
               className="h-full w-full"
               style={{
-                background: 'linear-gradient(180deg, rgba(34, 197, 94, 0.6) 0%, rgba(168, 85, 247, 0.6) 100%)',
+                background:
+                  "linear-gradient(180deg, rgba(34, 197, 94, 0.6) 0%, rgba(168, 85, 247, 0.6) 100%)",
               }}
             />
           </div>
 
           <div className="space-y-12">
             {experiences.map((experience, index) => {
-              const IconComponent = experienceIcons[index]?.icon || Trophy
-              const iconColor = experienceIcons[index]?.color || 'text-green-400'
-              const iconGlow = experienceIcons[index]?.glow || 'rgba(34, 197, 94, 0.5)'
-              const borderColor = index === 0 ? 'rgba(34, 197, 94, 0.5)' : 'rgba(168, 85, 247, 0.5)'
-              const companyColor = index === 0 ? 'text-green-400' : 'text-purple-400'
-              const isExpanded = expandedCards.includes(experience.id)
-              const achievements = getAchievements(experience.description, experience.id)
+              const IconComponent = experienceIcons[index]?.icon || Trophy;
+              const iconColor =
+                experienceIcons[index]?.color || "text-green-400";
+              const iconGlow =
+                experienceIcons[index]?.glow || "rgba(34, 197, 94, 0.5)";
+              const borderColor =
+                index === 0
+                  ? "rgba(34, 197, 94, 0.5)"
+                  : "rgba(168, 85, 247, 0.5)";
+              const companyColor =
+                index === 0 ? "text-green-400" : "text-purple-400";
+              const isExpanded = expandedCards.includes(experience.id);
+              const achievements = getAchievements(
+                experience.description,
+                experience.id
+              );
 
               return (
                 <motion.div
@@ -129,7 +140,7 @@ export default function Experience() {
                   variants={fadeInUp}
                   initial="initial"
                   whileInView="animate"
-                  viewport={{ once: true, margin: '-100px' }}
+                  viewport={{ once: true, margin: "-100px" }}
                   transition={{ delay: index * 0.2 }}
                   className="relative pl-0 md:pl-24"
                 >
@@ -152,11 +163,17 @@ export default function Experience() {
                     className="relative bg-white/5 backdrop-blur-lg rounded-3xl p-8 border transition-all duration-500 group cursor-pointer"
                     style={{
                       borderColor: borderColor,
-                      boxShadow: `0 10px 40px ${iconGlow.replace('0.5', '0.2')}`,
+                      boxShadow: `0 10px 40px ${iconGlow.replace(
+                        "0.5",
+                        "0.2"
+                      )}`,
                     }}
                     whileHover={{
                       scale: 1.02,
-                      boxShadow: `0 15px 50px ${iconGlow.replace('0.5', '0.3')}`,
+                      boxShadow: `0 15px 50px ${iconGlow.replace(
+                        "0.5",
+                        "0.3"
+                      )}`,
                     }}
                     onClick={() => toggleCard(experience.id)}
                   >
@@ -174,7 +191,9 @@ export default function Experience() {
                       <h3 className="text-3xl md:text-4xl font-black text-white uppercase mb-2 tracking-tight">
                         {experience.title}
                       </h3>
-                      <p className={`text-xl font-semibold mb-4 ${companyColor}`}>
+                      <p
+                        className={`text-xl font-semibold mb-4 ${companyColor}`}
+                      >
                         {experience.company}
                       </p>
 
@@ -195,10 +214,7 @@ export default function Experience() {
 
                       {/* Description */}
                       <p className="text-gray-300 leading-relaxed mb-6">
-                        {index === 0 
-                          ? 'Developed and implemented web-based applications to enhance business processes, improving efficiency and workflow automation.'
-                          : 'Implemented DevOps principles to optimize development workflows, fostering seamless collaboration between development and operations teams for greater efficiency.'
-                        }
+                        {experience.description}
                       </p>
                     </div>
 
@@ -207,16 +223,18 @@ export default function Experience() {
                       {isExpanded && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
+                          animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.4, ease: 'easeInOut' }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
                           {/* Key Achievements */}
                           <div className="mb-6 pt-6 border-t border-white/10">
                             <div className="flex items-center gap-2 mb-4">
                               <Key size={20} className="text-white" />
-                              <h4 className="text-lg font-bold text-white">Key Achievements</h4>
+                              <h4 className="text-lg font-bold text-white">
+                                Key Achievements
+                              </h4>
                             </div>
                             <ul className="space-y-3">
                               {achievements.map((achievement, idx) => (
@@ -227,8 +245,12 @@ export default function Experience() {
                                   transition={{ delay: idx * 0.1 }}
                                   className="flex items-start gap-3 text-gray-300"
                                 >
-                                  <span className={`text-lg ${iconColor} mt-1`}>⚡</span>
-                                  <span className="leading-relaxed">{achievement}</span>
+                                  <span className={`text-lg ${iconColor} mt-1`}>
+                                    ⚡
+                                  </span>
+                                  <span className="leading-relaxed">
+                                    {achievement}
+                                  </span>
                                 </motion.li>
                               ))}
                             </ul>
@@ -238,7 +260,9 @@ export default function Experience() {
                           <div className="pt-6 border-t border-white/10">
                             <div className="flex items-center gap-2 mb-4">
                               <Code size={20} className="text-white" />
-                              <h4 className="text-lg font-bold text-white">Technologies Used</h4>
+                              <h4 className="text-lg font-bold text-white">
+                                Technologies Used
+                              </h4>
                             </div>
                             <div className="flex flex-wrap gap-2">
                               {experience.technologies.map((tech) => (
@@ -259,11 +283,11 @@ export default function Experience() {
                     </AnimatePresence>
                   </motion.div>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
