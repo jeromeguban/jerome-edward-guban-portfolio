@@ -25,7 +25,7 @@ export const experiences = [
     id: 1,
     title: "Mid Backend Developer",
     company: "Electro Premier Venture Inc Intl",
-    period: "JUNE 2024 - JANUARY 2025",
+    period: "JUNE 2024 - JANUARY 2026",
     description:
       "Developed and maintained web-based business systems (HRIS, eCommerce, IMS, Virtual Calling Card) that improved workflow automation and performance. Integrated 3PL APIs (GoGo Express, Lalamove, Flash Express, J&T Express), cron automations, and internal modules to streamline operations. Implemented third-party integrations (Google Gemini, Google Marketplace, Gmail API, Semaphore) for automated product identification, data extraction, price comparison, and user verification, ensuring secure and scalable Laravel/PHP code.",
     technologies: [
