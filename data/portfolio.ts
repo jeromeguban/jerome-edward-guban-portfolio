@@ -4,7 +4,7 @@
 
 export const personalInfo = {
   name: "Jerome Edward Guban",
-  title: "Backend Developer",
+  title: "Web Developer",
   subtitle: "Building scalable and efficient systems",
   email: "jeromeguban02@gmail.com",
   location: "Philippines",
@@ -23,7 +23,7 @@ export const navigation = [
 export const experiences = [
   {
     id: 1,
-    title: "Mid Backend Developer",
+    title: "Mid Web Developer",
     company: "Electro Premier Venture Inc Intl",
     period: "JUNE 2024 - JANUARY 2026",
     description:

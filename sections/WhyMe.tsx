@@ -12,7 +12,7 @@ export default function WhyMe() {
     {
       icon: "🏆",
       number: "01",
-      title: "6+ YEARS OF EXCELLENCE",
+      title: "YEARS OF EXCELLENCE",
       titleGradient: "from-blue-400 via-purple-400 to-blue-400",
       description:
         "6 years of experience building robust, scalable applications for diverse industries from startups to enterprises.",

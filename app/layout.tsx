@@ -5,7 +5,7 @@ import Preloader from "@/components/Preloader";
 export const metadata: Metadata = {
   title: "Jerome Edward Guban - Portfolio",
   description:
-    "Backend Developer | 6+ years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
+    "Web Developer | Years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
   metadataBase: new URL("https://jerome-edward-guban-portfolio.vercel.app"),
   icons: {
     icon: "/images/logo.png",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Jerome Edward Guban - Portfolio",
     description:
-      "Backend Developer | 6+ years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
+      "Web Developer | Years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
     url: "https://jerome-edward-guban-portfolio.vercel.app",
     siteName: "Jerome Edward Guban - Portfolio",
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: "https://jerome-edward-guban-portfolio.vercel.app/images/featured-image.jpg",
         width: 1200,
         height: 1600,
-        alt: "Jerome Edward Guban - Backend Developer Portfolio",
+        alt: "Jerome Edward Guban - Web Developer Portfolio",
         type: "image/jpeg",
       },
     ],
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Jerome Edward Guban - Portfolio",
     description:
-      "Backend Developer | 6+ years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
+      "Web Developer | Years of experience building robust backend architectures. Expert in APIs, databases, and scalable server-side systems.",
     images: [
       "https://jerome-edward-guban-portfolio.vercel.app/images/featured-image.jpg",
     ],
@@ -74,7 +74,7 @@ export default function RootLayout({
         <meta property="og:image:height" content="1600" />
         <meta
           property="og:image:alt"
-          content="Jerome Edward Guban - Backend Developer Portfolio"
+          content="Jerome Edward Guban - Web Developer Portfolio"
         />
 
         {/* Telegram specific */}

@@ -29,12 +29,12 @@ export default function Projects() {
               whileInView="animate"
               viewport={{ once: true, margin: "-100px" }}
               transition={{ delay: index * 0.1 }}
-              className="group"
+              className="group h-full"
             >
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.15 }}
-                className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-shadow duration-300 border border-white/10"
+                className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-shadow duration-300 border border-white/10 h-full flex flex-col"
               >
                 {/* Project Image */}
                 <div className="relative aspect-video bg-gradient-to-br from-purple-900/30 to-blue-900/30 overflow-hidden">
@@ -81,7 +81,7 @@ export default function Projects() {
                 </div>
 
                 {/* Project Info */}
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-grow">
                   <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">
                     {project.title}
                   </h3>
@@ -90,7 +90,7 @@ export default function Projects() {
                   </p>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {project.technologies.map((tech) => (
                       <span
                         key={tech}
