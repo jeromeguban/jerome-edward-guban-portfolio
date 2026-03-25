@@ -49,7 +49,7 @@ export default function Projects() {
         className="relative overflow-hidden bg-black px-6 py-24"
       >
         <div className="mx-auto max-w-7xl">
-          <SectionTitle>Projects</SectionTitle>
+          {/* <SectionTitle>Projects</SectionTitle> */}
 
           <div className="grid gap-8 md:grid-cols-2">
             {projects.map((project, index) => (
@@ -216,7 +216,13 @@ function ProjectModal({
     }, 3500);
 
     return () => window.clearInterval(autoSlide);
-  }, [gallery.length, hasMultipleImages, isAutoSlidePaused, isZoomed, project.id]);
+  }, [
+    gallery.length,
+    hasMultipleImages,
+    isAutoSlidePaused,
+    isZoomed,
+    project.id,
+  ]);
 
   const goToPreviousImage = () => {
     setActiveImageIndex((currentIndex) =>
@@ -305,10 +311,14 @@ function ProjectModal({
             <div className="flex h-full min-h-0 flex-col px-0 py-5 md:px-0 md:py-8 lg:py-6">
               <div
                 onMouseEnter={
-                  hasMultipleImages ? () => setIsAutoSlidePaused(true) : undefined
+                  hasMultipleImages
+                    ? () => setIsAutoSlidePaused(true)
+                    : undefined
                 }
                 onMouseLeave={
-                  hasMultipleImages ? () => setIsAutoSlidePaused(false) : undefined
+                  hasMultipleImages
+                    ? () => setIsAutoSlidePaused(false)
+                    : undefined
                 }
                 onTouchStart={hasMultipleImages ? handleTouchStart : undefined}
                 onTouchEnd={hasMultipleImages ? handleTouchEnd : undefined}
