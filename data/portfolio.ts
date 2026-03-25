@@ -16,7 +16,8 @@ export const navigation = [
   { name: "About", href: "about" },
   { name: "Why Me", href: "why-me" },
   { name: "Experience", href: "experience" },
-  { name: "Projects", href: "projects" },
+  { name: "Projects", href: "featured-projects" },
+  // { name: "Projects", href: "projects" },
   { name: "Contact", href: "contact" },
 ];
 
@@ -66,6 +67,7 @@ export const projects = [
   {
     id: 1,
     title: "HMR Shop N' Bid",
+    category: "E-commerce",
     description:
       "E-commerce and Online Bidding website for HMR Philippines Inc.",
     image: "/images/project1.jpg",
@@ -87,8 +89,9 @@ export const projects = [
   {
     id: 2,
     title: "Hammer 3.0",
+    category: "Warehouse System",
     description:
-      "A Warehouse Management System that handles business’ entire inventory and operations",
+      "A Warehouse Management System that handles business' entire inventory and operations",
     image: "/images/2.webp",
     technologies: [
       "Laravel",
@@ -108,6 +111,7 @@ export const projects = [
   {
     id: 3,
     title: "HMR CMS",
+    category: "CMS",
     description: "Content Management System For Shop N' Bid",
     image: "/images/3.webp",
     technologies: [
@@ -129,6 +133,7 @@ export const projects = [
   {
     id: 4,
     title: "HMR Forms",
+    category: "Forms",
     description: "A System like Google Forms",
     image: "/images/4.webp",
     technologies: [
@@ -148,6 +153,7 @@ export const projects = [
   {
     id: 5,
     title: "Overlanders 2.0",
+    category: "Warehouse System",
     description: "Warehouse Management System",
     image: "/images/5.webp",
     technologies: [
@@ -167,6 +173,7 @@ export const projects = [
   {
     id: 6,
     title: "Seller Platform",
+    category: "Seller Platform",
     description: "Seller Platform for HMR Shop N' Bid",
     image: "/images/6.webp",
     technologies: [
@@ -186,6 +193,7 @@ export const projects = [
   {
     id: 7,
     title: "Simulcast Auction",
+    category: "Real-time",
     description:
       "HMR Shop N' Bid Live Auction Controller using WebRTC and Ant Media Server",
     image: "/images/7.webp",
@@ -209,6 +217,7 @@ export const projects = [
   {
     id: 8,
     title: "Live Selling",
+    category: "Real-time",
     description:
       "HMR Shop N' Bid Live Selling Controller using WebRTC and Ant Media Server",
     image: "/images/8.webp",
@@ -232,6 +241,7 @@ export const projects = [
   {
     id: 9,
     title: "Recherche E-commerce",
+    category: "E-commerce",
     description: "E-commerce website for Recherche",
     image: "/images/9.png",
     technologies: [
@@ -249,6 +259,7 @@ export const projects = [
   {
     id: 10,
     title: "Recherche E-commerce CMS",
+    category: "CMS",
     description: "Content management system for Recherche E-commerce",
     image: "/images/10.png",
     technologies: [
@@ -266,6 +277,7 @@ export const projects = [
   {
     id: 11,
     title: "HRIS System",
+    category: "HRIS",
     description:
       "Human Resource Information System for Electro Premier Venture Inc Intl",
     image: "/images/11.png",
@@ -284,6 +296,7 @@ export const projects = [
   {
     id: 12,
     title: "Virtual Calling Card System",
+    category: "Business Tool",
     description:
       "Virtual Calling Card System for Electro Premier Venture Inc Intl",
     image: "/images/13.png",
@@ -294,6 +307,7 @@ export const projects = [
   {
     id: 13,
     title: "Inventory Management System",
+    category: "Inventory System",
     description:
       "Inventory Management System for Electro Premier Venture Inc Intl",
     image: "/images/12.png",
@@ -312,6 +326,7 @@ export const projects = [
   {
     id: 14,
     title: "EXtrim Version 3.0",
+    category: "Warehouse System",
     description:
       "Combination of Inventory Management System and Warehouse Management System for HMR Shop N' Bid (Retail and Auction)",
     image: "/images/xv3.png",

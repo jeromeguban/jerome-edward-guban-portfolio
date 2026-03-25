@@ -47,7 +47,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20 lg:pt-24"
     >
       {/* Subtle gradient overlays */}
       <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-transparent to-transparent z-[1]" />
@@ -416,16 +416,16 @@ export default function Hero() {
 
       {/* Main Content Container */}
       <div className="w-full max-w-[1920px] mx-auto relative z-10">
-        <div className="flex flex-col lg:grid lg:grid-cols-[1fr,1.2fr] min-h-screen">
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr,1fr] xl:grid-cols-[1fr,1.2fr] min-h-screen lg:gap-x-0">
           {/* Left Side - Text Content */}
           <motion.div
             variants={scaleIn}
             initial="initial"
             animate="animate"
             transition={{ delay: 0.2 }}
-            className="flex flex-col justify-center items-center lg:items-start px-4 md:px-8 lg:px-20 xl:px-28 py-20 lg:py-0 w-full"
+            className="relative z-20 flex flex-col justify-center items-center lg:items-start px-4 md:px-8 lg:px-10 xl:px-14 2xl:px-16 py-20 lg:py-0 w-full"
           >
-            <div className="w-full max-w-xl lg:max-w-2xl bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-10 shadow-2xl mt-2 md:mt-32 lg:mt-0 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="w-full max-w-xl lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 lg:p-8 shadow-2xl mt-2 md:mt-32 lg:mt-0 flex flex-col items-center lg:items-start text-center lg:text-left">
               {/* Open To Work Badge */}
               <div className="mb-4">
                 <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/20">
@@ -435,14 +435,14 @@ export default function Hero() {
               </div>
 
               {/* Name with Gradient */}
-              <h1 className="text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold mb-4 leading-tight">
+              <h1 className="text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold mb-4 leading-tight">
                 <span className="bg-gradient-to-r from-blue-200 via-purple-300 to-pink-300 bg-clip-text text-transparent">
                   {personalInfo.name}
                 </span>
               </h1>
 
               {/* Job Title */}
-              <h2 className="text-2xl md:text-3xl lg:text-3xl xl:text-4xl font-semibold text-blue-200 min-h-[2.5rem] md:min-h-[3rem] mb-6">
+              <h2 className="text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-blue-200 min-h-[2.5rem] md:min-h-[3rem] mb-6">
                 {typedText}
                 <span className="animate-pulse ml-1">|</span>
               </h2>
@@ -569,10 +569,10 @@ export default function Hero() {
             initial="initial"
             animate="animate"
             transition={{ delay: 0.4 }}
-            className="relative flex items-end justify-center pt-10 pb-0 lg:py-0"
+            className="relative z-10 flex items-end justify-center pt-10 pb-0 lg:py-0"
           >
             {/* Avatar Container - Bottom aligned, much larger */}
-            <div className="relative w-[600px] md:w-[700px] lg:w-[750px] xl:w-[850px] 2xl:w-[950px]">
+            <div className="relative w-full max-w-[600px] md:max-w-[700px] lg:max-w-[550px] xl:max-w-[800px] 2xl:max-w-[950px]">
               {/* Glowing background effect */}
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-gradient-to-t from-purple-500/30 via-blue-500/15 to-transparent rounded-full blur-3xl" />
 

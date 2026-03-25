@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { fadeInUp } from '@/lib/animations'
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 /**
  * Footer section with minimal text and soft fade animation
  */
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-12 px-6 bg-transparent border-t border-white/10">
+    <footer className="relative overflow-hidden bg-black py-24 px-6">
       <motion.div
         variants={fadeInUp}
         initial="initial"
@@ -23,6 +23,5 @@ export default function Footer() {
         </p>
       </motion.div>
     </footer>
-  )
+  );
 }
-

@@ -1,14 +1,15 @@
-'use client'
+"use client";
 
-import Navigation from '@/sections/Navigation'
-import Hero from '@/sections/Hero'
-import About from '@/sections/About'
-import WhyMe from '@/sections/WhyMe'
-import Experience from '@/sections/Experience'
-import Projects from '@/sections/Projects'
-import Contact from '@/sections/Contact'
-import Footer from '@/sections/Footer'
-import CustomCursor from '@/components/CustomCursor'
+import Navigation from "@/sections/Navigation";
+import Hero from "@/sections/Hero";
+import About from "@/sections/About";
+import WhyMe from "@/sections/WhyMe";
+import Experience from "@/sections/Experience";
+import Projects from "@/sections/Projects";
+import FeaturedProjects from "@/sections/FeaturedProjects";
+import Contact from "@/sections/Contact";
+import Footer from "@/sections/Footer";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
@@ -20,11 +21,11 @@ export default function Home() {
         <About />
         <WhyMe />
         <Experience />
-        <Projects />
+        <FeaturedProjects />
+        {/* <Projects /> */}
         <Contact />
       </main>
       <Footer />
     </>
-  )
+  );
 }
-

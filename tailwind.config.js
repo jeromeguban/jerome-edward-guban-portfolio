@@ -34,6 +34,8 @@ module.exports = {
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
+        'scroll-down': 'scroll-down 35s linear infinite',
+        'scroll-up': 'scroll-up 35s linear infinite',
       },
       keyframes: {
         float: {
@@ -43,6 +45,14 @@ module.exports = {
         'bounce-gentle': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-5px)' },
+        },
+        'scroll-down': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-50%)' },
+        },
+        'scroll-up': {
+          '0%': { transform: 'translateY(-50%)' },
+          '100%': { transform: 'translateY(0)' },
         },
       },
       transitionTimingFunction: {
