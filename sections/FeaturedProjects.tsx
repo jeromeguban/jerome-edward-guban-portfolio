@@ -80,7 +80,7 @@ export default function FeaturedProjects() {
               </span>
 
               <h2 className="mb-6 text-5xl font-black leading-[1.05] md:text-6xl lg:text-7xl">
-                <span className="block text-white">Creative</span>
+                {/* <span className="block text-white">Creative</span> */}
                 <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
                   Projects
                 </span>
@@ -88,7 +88,7 @@ export default function FeaturedProjects() {
 
               <p className="mb-10 max-w-md text-lg leading-relaxed text-gray-400">
                 Showcasing innovative solutions across web development, mobile
-                apps, and cutting-edge technologies.
+                ready designs, and cutting-edge technologies.
               </p>
 
               <motion.button
@@ -250,15 +250,17 @@ function ProjectModal({
     setIsZoomed(false);
     if (thumbnailContainerRef.current) {
       const container = thumbnailContainerRef.current;
-      const activeThumbnail = container.children[activeImageIndex] as HTMLElement;
+      const activeThumbnail = container.children[
+        activeImageIndex
+      ] as HTMLElement;
       if (activeThumbnail) {
         const containerWidth = container.offsetWidth;
         const thumbnailOffset = activeThumbnail.offsetLeft;
         const thumbnailWidth = activeThumbnail.offsetWidth;
-        
+
         container.scrollTo({
           left: thumbnailOffset - containerWidth / 2 + thumbnailWidth / 2,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -276,7 +278,13 @@ function ProjectModal({
     }, 3500);
 
     return () => window.clearInterval(autoSlide);
-  }, [gallery.length, hasMultipleImages, isAutoSlidePaused, isZoomed, project.id]);
+  }, [
+    gallery.length,
+    hasMultipleImages,
+    isAutoSlidePaused,
+    isZoomed,
+    project.id,
+  ]);
 
   const goToPreviousImage = () => {
     setActiveImageIndex((currentIndex) =>
@@ -364,8 +372,16 @@ function ProjectModal({
           <div className="border-b border-white/10 bg-slate-950/30 lg:border-r lg:border-b-0 min-w-0 min-h-0">
             <div className="flex h-full flex-col px-0 py-5 md:px-0 md:py-8 lg:py-6 min-h-0">
               <div
-                onMouseEnter={hasMultipleImages ? () => setIsAutoSlidePaused(true) : undefined}
-                onMouseLeave={hasMultipleImages ? () => setIsAutoSlidePaused(false) : undefined}
+                onMouseEnter={
+                  hasMultipleImages
+                    ? () => setIsAutoSlidePaused(true)
+                    : undefined
+                }
+                onMouseLeave={
+                  hasMultipleImages
+                    ? () => setIsAutoSlidePaused(false)
+                    : undefined
+                }
                 onTouchStart={hasMultipleImages ? handleTouchStart : undefined}
                 onTouchEnd={hasMultipleImages ? handleTouchEnd : undefined}
                 className={`relative flex flex-1 overflow-hidden border-y border-white/10 bg-slate-950/45 lg:border-y-0 min-h-0 min-w-0 ${
@@ -390,7 +406,10 @@ function ProjectModal({
                   <>
                     <button
                       type="button"
-                      onClick={(e) => { e.stopPropagation(); goToPreviousImage(); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goToPreviousImage();
+                      }}
                       className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
                       aria-label="Previous project image"
                     >
@@ -399,7 +418,10 @@ function ProjectModal({
 
                     <button
                       type="button"
-                      onClick={(e) => { e.stopPropagation(); goToNextImage(); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goToNextImage();
+                      }}
                       className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
                       aria-label="Next project image"
                     >
