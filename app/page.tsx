@@ -22,7 +22,7 @@ export default function Home() {
         <WhyMe />
         <Experience />
         <FeaturedProjects />
-        {/* <Projects /> */}
+        <Projects />
         <Contact />
       </main>
       <Footer />

@@ -15,10 +15,10 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-24 px-6"
+      className="relative overflow-hidden  bg-black py-24 px-6"
     >
       <div className="max-w-7xl mx-auto">
-        <SectionTitle>Featured Projects</SectionTitle>
+        {/* <SectionTitle>Projects</SectionTitle> */}
 
         <div className="grid md:grid-cols-2 gap-8">
           {projects.map((project, index) => (

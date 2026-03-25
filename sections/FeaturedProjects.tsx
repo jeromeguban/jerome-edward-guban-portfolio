@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, type TouchEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { projects } from "@/data/portfolio";
 import { scrollToElement } from "@/lib/utils";
 import { fadeInUp } from "@/lib/animations";
-import { ExternalLink, Github, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Github,
+  X,
+} from "lucide-react";
 
 type Project = (typeof projects)[number];
 
@@ -226,6 +232,91 @@ function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
+  const gallery = project.images?.length ? project.images : [project.image];
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isAutoSlidePaused, setIsAutoSlidePaused] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const hasMultipleImages = gallery.length > 1;
+  const thumbnailContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setActiveImageIndex(0);
+    setIsAutoSlidePaused(false);
+    setIsZoomed(false);
+  }, [project.id]);
+
+  useEffect(() => {
+    setIsZoomed(false);
+    if (thumbnailContainerRef.current) {
+      const container = thumbnailContainerRef.current;
+      const activeThumbnail = container.children[activeImageIndex] as HTMLElement;
+      if (activeThumbnail) {
+        const containerWidth = container.offsetWidth;
+        const thumbnailOffset = activeThumbnail.offsetLeft;
+        const thumbnailWidth = activeThumbnail.offsetWidth;
+        
+        container.scrollTo({
+          left: thumbnailOffset - containerWidth / 2 + thumbnailWidth / 2,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [activeImageIndex]);
+
+  useEffect(() => {
+    if (!hasMultipleImages || isAutoSlidePaused || isZoomed) {
+      return;
+    }
+
+    const autoSlide = window.setInterval(() => {
+      setActiveImageIndex((currentIndex) =>
+        currentIndex === gallery.length - 1 ? 0 : currentIndex + 1
+      );
+    }, 3500);
+
+    return () => window.clearInterval(autoSlide);
+  }, [gallery.length, hasMultipleImages, isAutoSlidePaused, isZoomed, project.id]);
+
+  const goToPreviousImage = () => {
+    setActiveImageIndex((currentIndex) =>
+      currentIndex === 0 ? gallery.length - 1 : currentIndex - 1
+    );
+  };
+
+  const goToNextImage = () => {
+    setActiveImageIndex((currentIndex) =>
+      currentIndex === gallery.length - 1 ? 0 : currentIndex + 1
+    );
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    setIsAutoSlidePaused(true);
+    setTouchStartX(event.touches[0]?.clientX ?? null);
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartX === null) {
+      return;
+    }
+
+    const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+    const swipeDistance = touchStartX - touchEndX;
+
+    if (Math.abs(swipeDistance) > 50) {
+      if (swipeDistance > 0) {
+        goToNextImage();
+      } else {
+        goToPreviousImage();
+      }
+    }
+
+    setTouchStartX(null);
+    setIsAutoSlidePaused(false);
+  };
+
+  const toggleZoom = () => setIsZoomed(!isZoomed);
+
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-xl md:p-8"
@@ -238,7 +329,9 @@ function ProjectModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-title-${project.id}`}
-        className="relative max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 shadow-[0_30px_120px_rgba(15,23,42,0.65)]"
+        className={`relative max-h-[90vh] w-full overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 shadow-[0_30px_120px_rgba(15,23,42,0.65)] ${
+          hasMultipleImages ? "max-w-6xl" : "max-w-5xl"
+        }`}
         initial={{ opacity: 0, scale: 0.95, y: 24 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.98, y: 16 }}
@@ -261,18 +354,97 @@ function ProjectModal({
           <X size={18} />
         </button>
 
-        <div className="relative grid max-h-[92vh] overflow-y-auto lg:grid-cols-[1.25fr,0.95fr]">
-          <div className="border-b border-white/10 bg-slate-950/30 lg:border-r lg:border-b-0">
-            <div className="flex min-h-[320px] items-center justify-center p-5 md:min-h-[420px] md:p-8">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="max-h-[68vh] w-full rounded-[1.5rem] object-contain"
-              />
+        <div
+          className={`relative grid max-h-[90vh] overflow-hidden ${
+            hasMultipleImages
+              ? "lg:h-[80vh] lg:grid-cols-[1.2fr,0.8fr]"
+              : "lg:h-[70vh] lg:grid-cols-[1.1fr,0.9fr]"
+          }`}
+        >
+          <div className="border-b border-white/10 bg-slate-950/30 lg:border-r lg:border-b-0 min-w-0 min-h-0">
+            <div className="flex h-full flex-col px-0 py-5 md:px-0 md:py-8 lg:py-6 min-h-0">
+              <div
+                onMouseEnter={hasMultipleImages ? () => setIsAutoSlidePaused(true) : undefined}
+                onMouseLeave={hasMultipleImages ? () => setIsAutoSlidePaused(false) : undefined}
+                onTouchStart={hasMultipleImages ? handleTouchStart : undefined}
+                onTouchEnd={hasMultipleImages ? handleTouchEnd : undefined}
+                className={`relative flex flex-1 overflow-hidden border-y border-white/10 bg-slate-950/45 lg:border-y-0 min-h-0 min-w-0 ${
+                  hasMultipleImages
+                    ? "h-[40vh] items-center justify-center px-4 py-4 md:h-[45vh] md:px-6 md:py-6 lg:h-auto"
+                    : "items-center justify-center min-h-[280px] md:min-h-[360px] lg:min-h-0 lg:h-full px-6"
+                }`}
+              >
+                <img
+                  src={gallery[activeImageIndex]}
+                  alt={`${project.title} preview ${activeImageIndex + 1}`}
+                  onClick={toggleZoom}
+                  className={`${
+                    hasMultipleImages
+                      ? "max-h-full w-full rounded-[1.5rem] object-contain select-none cursor-zoom-in"
+                      : "h-auto max-h-[60vh] lg:max-h-full w-full object-contain rounded-xl cursor-zoom-in"
+                  }`}
+                  draggable={false}
+                />
+
+                {hasMultipleImages ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); goToPreviousImage(); }}
+                      className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      aria-label="Previous project image"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); goToNextImage(); }}
+                      className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      aria-label="Next project image"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+
+                    <div className="absolute right-4 bottom-4 rounded-full border border-white/15 bg-slate-950/55 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-white/85 flex-shrink-0">
+                      {activeImageIndex + 1} / {gallery.length}
+                    </div>
+                  </>
+                ) : null}
+              </div>
+
+              {hasMultipleImages ? (
+                <div
+                  ref={thumbnailContainerRef}
+                  className="mt-4 flex gap-3 overflow-x-auto px-4 pb-1 md:px-6 flex-shrink-0 scroll-smooth"
+                  onMouseEnter={() => setIsAutoSlidePaused(true)}
+                  onMouseLeave={() => setIsAutoSlidePaused(false)}
+                >
+                  {gallery.map((image, index) => (
+                    <button
+                      key={image}
+                      type="button"
+                      onClick={() => setActiveImageIndex(index)}
+                      className={`relative h-20 w-28 shrink-0 overflow-hidden rounded-2xl border transition ${
+                        index === activeImageIndex
+                          ? "border-purple-300/80 ring-2 ring-purple-300/50"
+                          : "border-white/10 hover:border-white/30"
+                      }`}
+                      aria-label={`Show project image ${index + 1}`}
+                    >
+                      <img
+                        src={image}
+                        alt={`${project.title} thumbnail ${index + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
 
-          <div className="flex flex-col justify-between p-6 md:p-8">
+          <div className="flex flex-col justify-between overflow-y-auto p-6 md:p-8 min-w-0 min-h-0">
             <div>
               {project.category ? (
                 <span className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-purple-200">
@@ -291,7 +463,7 @@ function ProjectModal({
                 {project.description}
               </p>
 
-              <div className="mt-8">
+              <div className="mt-8 hidden md:block">
                 <p className="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-slate-300/80">
                   Technologies Used
                 </p>
@@ -339,6 +511,38 @@ function ProjectModal({
           </div>
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {isZoomed && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 overflow-auto touch-pan-x touch-pan-y"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleZoom();
+            }}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleZoom();
+              }}
+              className="fixed top-4 right-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
+            >
+              <X size={24} />
+            </button>
+            <img
+              src={gallery[activeImageIndex]}
+              alt={`Zoomed ${project.title}`}
+              className="m-auto block h-auto w-[200vw] max-w-none sm:w-[150vw] md:w-full md:object-contain"
+              onClick={(e) => e.stopPropagation()}
+              draggable={false}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
