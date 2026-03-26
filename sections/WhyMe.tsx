@@ -2,12 +2,14 @@
 
 import { motion } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { useTheme } from "@/components/ThemeProvider";
 
 /**
  * Why Me section with feature cards
  * Showcases key strengths and achievements with premium hover effects
  */
 export default function WhyMe() {
+  const { theme } = useTheme();
   const features = [
     {
       icon: "🏆",
@@ -21,6 +23,8 @@ export default function WhyMe() {
       badgeBorder: "border-green-500/50",
       badgeBg: "bg-green-500/10",
       bgGradient: "from-purple-900/40 via-blue-900/30 to-teal-900/40",
+      lightBg:
+        "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(224,231,255,0.9) 100%)",
       numberGradient: "linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)",
       iconColor: "text-green-400",
     },
@@ -36,6 +40,8 @@ export default function WhyMe() {
       badgeBorder: "border-yellow-500/50",
       badgeBg: "bg-yellow-500/10",
       bgGradient: "from-purple-900/40 via-pink-900/30 to-orange-900/40",
+      lightBg:
+        "linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(252,231,243,0.88) 100%)",
       numberGradient: "linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%)",
       iconColor: "text-yellow-400",
     },
@@ -51,6 +57,8 @@ export default function WhyMe() {
       badgeBorder: "border-green-500/50",
       badgeBg: "bg-green-500/10",
       bgGradient: "from-green-900/40 via-blue-900/30 to-cyan-900/40",
+      lightBg:
+        "linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(220,252,231,0.86) 100%)",
       numberGradient: "linear-gradient(135deg, #10B981 0%, #3B82F6 100%)",
       iconColor: "text-green-400",
     },
@@ -66,6 +74,8 @@ export default function WhyMe() {
       badgeBorder: "border-yellow-500/50",
       badgeBg: "bg-yellow-500/10",
       bgGradient: "from-yellow-900/40 via-orange-900/30 to-red-900/40",
+      lightBg:
+        "linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(254,249,195,0.88) 100%)",
       numberGradient: "linear-gradient(135deg, #F59E0B 0%, #F97316 100%)",
       iconColor: "text-yellow-400",
     },
@@ -74,7 +84,7 @@ export default function WhyMe() {
   return (
     <section
       id="why-me"
-      className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-24 px-6"
+      className="theme-section-secondary relative overflow-hidden px-6 py-24"
     >
       <div className="max-w-7xl mx-auto">
         <motion.h2
@@ -82,7 +92,7 @@ export default function WhyMe() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold text-white mb-16 text-center"
+          className="theme-text-main mb-16 text-center text-4xl font-bold md:text-5xl"
         >
           Why Choose Me
         </motion.h2>
@@ -109,8 +119,13 @@ export default function WhyMe() {
               }}
             >
               <div
-                className={`relative bg-gradient-to-br ${feature.bgGradient} backdrop-blur-lg rounded-3xl p-8 border border-white/10 overflow-hidden transition-all duration-500 group-hover:border-white/20`}
+                className={`relative overflow-hidden rounded-3xl border p-8 backdrop-blur-lg transition-all duration-500 group-hover:border-white/20 ${
+                  theme === "dark"
+                    ? `bg-gradient-to-br ${feature.bgGradient} border-white/10`
+                    : "theme-panel"
+                }`}
                 style={{
+                  background: theme === "light" ? feature.lightBg : undefined,
                   boxShadow: "0 10px 40px rgba(0, 0, 0, 0.3)",
                 }}
               >
@@ -125,9 +140,10 @@ export default function WhyMe() {
 
                 {/* Number badge - top right */}
                 <div
-                  className="absolute top-6 right-6 w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg z-10 transition-all duration-500 group-hover:scale-110"
+                  className="absolute top-6 right-6 z-10 flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold text-white transition-all duration-500 group-hover:scale-110"
                   style={{
                     background: feature.numberGradient,
+                    color: "#ffffff",
                     boxShadow: "0 4px 15px rgba(139, 92, 246, 0.4)",
                   }}
                 >
@@ -140,7 +156,7 @@ export default function WhyMe() {
 
                 {/* Icon - top left */}
                 <div
-                  className={`w-16 h-16 bg-white/5 backdrop-blur-sm rounded-2xl flex items-center justify-center text-3xl mb-6 border border-white/10 group-hover:border-white/20 transition-all duration-500 group-hover:scale-110 ${feature.iconColor}`}
+                  className={`theme-glass mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border text-3xl transition-all duration-500 group-hover:scale-110 group-hover:border-white/20 ${feature.iconColor}`}
                 >
                   {feature.icon}
                 </div>
@@ -157,7 +173,7 @@ export default function WhyMe() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-300 leading-relaxed mb-6 group-hover:text-white transition-colors duration-500">
+                <p className="theme-text-muted mb-6 leading-relaxed transition-colors duration-500">
                   {feature.description}
                 </p>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Preloader from "@/components/Preloader";
+import ThemeProvider from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Jerome Edward Guban - Portfolio",
@@ -56,14 +57,37 @@ export const metadata: Metadata = {
   },
 };
 
+const themeInitScript = `
+  (function () {
+    try {
+      var storageKey = "portfolio-theme";
+      var storedTheme = window.localStorage.getItem(storageKey);
+      var systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      var theme =
+        storedTheme === "light" || storedTheme === "dark"
+          ? storedTheme
+          : systemTheme;
+
+      document.documentElement.dataset.theme = theme;
+      document.documentElement.style.colorScheme = theme;
+    } catch (error) {
+      document.documentElement.dataset.theme = "dark";
+      document.documentElement.style.colorScheme = "dark";
+    }
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {/* Additional meta tags for better link preview compatibility */}
         <meta
           property="og:image:secure_url"
@@ -94,8 +118,10 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Preloader />
-        {children}
+        <ThemeProvider>
+          <Preloader />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

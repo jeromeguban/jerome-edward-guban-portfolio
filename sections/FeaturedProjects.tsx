@@ -52,7 +52,7 @@ export default function FeaturedProjects() {
     <>
       <section
         id="featured-projects"
-        className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-20 md:py-28 lg:py-32"
+        className="theme-section-secondary relative overflow-hidden py-20 md:py-28 lg:py-32"
       >
         {/* Subtle background accents */}
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
@@ -113,8 +113,20 @@ export default function FeaturedProjects() {
 
             {/* Right Side - Dual Column Carousel */}
             <div className="relative h-[600px] w-full overflow-hidden md:h-[700px] lg:h-[750px]">
-              <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-24 bg-gradient-to-b from-[#1a0e2e] to-transparent" />
-              <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-24 bg-gradient-to-t from-[#1a0e2e] to-transparent" />
+              <div
+                className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-24"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, var(--featured-fade) 0%, transparent 100%)",
+                }}
+              />
+              <div
+                className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-24"
+                style={{
+                  background:
+                    "linear-gradient(to top, var(--featured-fade) 0%, transparent 100%)",
+                }}
+              />
 
               <div className="grid h-full grid-cols-2 gap-4 md:gap-6">
                 <div className="group relative overflow-hidden">
@@ -177,7 +189,7 @@ function ProjectCard({
       <button
         type="button"
         onClick={() => onSelect(project)}
-        className="block w-full overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] text-left backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-purple-400/70 focus:ring-offset-2 focus:ring-offset-[#1a0e2e]"
+        className="theme-glass block w-full overflow-hidden rounded-2xl border text-left backdrop-blur-sm transition-all duration-300 hover:border-white/15 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-purple-400/70 focus:ring-offset-2 focus:ring-offset-[#1a0e2e]"
       >
         {/* Image with category overlay */}
         <div className="relative aspect-[4/3] overflow-hidden">
@@ -191,7 +203,7 @@ function ProjectCard({
 
           {/* Category badge */}
           {project.category && (
-            <span className="absolute top-3 left-3 px-3 py-1 bg-white/15 backdrop-blur-xl text-white text-xs font-medium rounded-full border border-white/20">
+            <span className="theme-glass theme-text-main absolute top-3 left-3 rounded-full border px-3 py-1 text-xs font-medium backdrop-blur-xl">
               {project.category}
             </span>
           )}
@@ -203,7 +215,7 @@ function ProjectCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(event) => event.stopPropagation()}
-              className="absolute top-3 right-3 w-8 h-8 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors border border-white/20"
+              className="theme-glass theme-text-main absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur-xl transition-colors hover:bg-white/20"
               aria-label={`Open ${project.title}`}
             >
               <ExternalLink size={14} />
@@ -213,10 +225,10 @@ function ProjectCard({
 
         {/* Text Content */}
         <div className="p-4 md:p-5">
-          <h3 className="text-white font-bold text-base md:text-lg mb-1.5 group-hover/card:text-purple-300 transition-colors line-clamp-1">
+          <h3 className="theme-text-main mb-1.5 line-clamp-1 text-base font-bold transition-colors group-hover/card:text-purple-300 md:text-lg">
             {project.title}
           </h3>
-          <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
+          <p className="theme-text-muted line-clamp-2 text-sm leading-relaxed">
             {project.description}
           </p>
         </div>
@@ -337,7 +349,7 @@ function ProjectModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-title-${project.id}`}
-        className={`relative max-h-[90vh] w-full overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 shadow-[0_30px_120px_rgba(15,23,42,0.65)] ${
+        className={`theme-panel relative max-h-[90vh] w-full overflow-hidden rounded-[2rem] border shadow-[0_30px_120px_rgba(15,23,42,0.65)] ${
           hasMultipleImages ? "max-w-6xl" : "max-w-5xl"
         }`}
         initial={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -356,7 +368,7 @@ function ProjectModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
+          className="theme-glass theme-text-main absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border transition hover:bg-white/20"
           aria-label="Close project details"
         >
           <X size={18} />
@@ -410,7 +422,7 @@ function ProjectModal({
                         e.stopPropagation();
                         goToPreviousImage();
                       }}
-                      className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      className="theme-glass theme-text-main absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border transition hover:bg-white/20"
                       aria-label="Previous project image"
                     >
                       <ChevronLeft size={18} />
@@ -422,13 +434,13 @@ function ProjectModal({
                         e.stopPropagation();
                         goToNextImage();
                       }}
-                      className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      className="theme-glass theme-text-main absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border transition hover:bg-white/20"
                       aria-label="Next project image"
                     >
                       <ChevronRight size={18} />
                     </button>
 
-                    <div className="absolute right-4 bottom-4 rounded-full border border-white/15 bg-slate-950/55 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-white/85 flex-shrink-0">
+                    <div className="theme-glass-strong theme-text-main absolute right-4 bottom-4 flex-shrink-0 rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.18em]">
                       {activeImageIndex + 1} / {gallery.length}
                     </div>
                   </>
@@ -469,19 +481,19 @@ function ProjectModal({
           <div className="flex flex-col justify-between overflow-y-auto p-6 md:p-8 min-w-0 min-h-0">
             <div>
               {project.category ? (
-                <span className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-purple-200">
+                <span className="theme-glass theme-text-soft mb-4 inline-flex rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em]">
                   {project.category}
                 </span>
               ) : null}
 
               <h3
                 id={`project-title-${project.id}`}
-                className="text-3xl font-black text-white md:text-4xl"
+                className="theme-text-main text-3xl font-black md:text-4xl"
               >
                 {project.title}
               </h3>
 
-              <p className="mt-4 text-base leading-7 text-slate-200/90 md:text-lg">
+              <p className="theme-text-muted mt-4 text-base leading-7 md:text-lg">
                 {project.description}
               </p>
 
@@ -493,7 +505,7 @@ function ProjectModal({
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                      className="theme-glass theme-text-main rounded-full border px-3.5 py-1.5 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
                     >
                       {tech}
                     </span>
@@ -510,7 +522,7 @@ function ProjectModal({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/25"
+                    className="theme-glass theme-text-main inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition hover:bg-white/20"
                   >
                     <ExternalLink size={16} />
                     Live Project
@@ -522,7 +534,7 @@ function ProjectModal({
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/35 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-950/55"
+                    className="theme-glass theme-text-main inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition hover:bg-white/20"
                   >
                     <Github size={16} />
                     Source Code
@@ -551,7 +563,7 @@ function ProjectModal({
                 e.stopPropagation();
                 toggleZoom();
               }}
-              className="fixed top-4 right-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
+              className="theme-glass fixed top-4 right-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full text-white backdrop-blur-md"
             >
               <X size={24} />
             </button>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { navigation } from '@/data/portfolio'
 import { scrollToElement } from '@/lib/utils'
+import ThemeToggle from '@/components/ThemeToggle'
 
 /**
  * Premium navigation bar with two visual states and scroll progress
@@ -148,7 +149,7 @@ export default function Navigation() {
       <motion.nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent ${
           isScrolled 
-            ? 'md:bg-[#0A0A14]/95 md:backdrop-blur-xl md:border-b md:border-white/5 md:shadow-2xl md:shadow-purple-500/10' 
+            ? 'md:theme-nav-shell md:backdrop-blur-xl md:border-b' 
             : ''
         }`}
         initial={{ y: -100 }}
@@ -191,7 +192,7 @@ export default function Navigation() {
                   className="text-3xl md:text-4xl font-bold tracking-tight"
                 >
                   <span 
-                    className="text-white"
+                    className="theme-text-main"
                     style={{
                       textShadow: '0 0 30px rgba(167, 139, 250, 0.6)',
                     }}
@@ -207,85 +208,88 @@ export default function Navigation() {
             <div className="md:hidden flex-1"></div>
 
             {/* Desktop Navigation Links */}
-            <ul className="hidden md:flex items-center gap-2">
-              {navigation.map((item, index) => (
-                <motion.li
-                  key={item.name}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05, duration: 0.4 }}
-                >
-                  {isScrolled ? (
-                    // Scrolled: Pill buttons
-                    <button
-                      onClick={() => handleNavClick(item.href)}
-                      className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${
-                        activeSection === item.href
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-500/30'
-                          : 'bg-white/5 text-white/80 hover:bg-white/10 hover:text-white'
-                      }`}
-                    >
-                      {item.name}
-                    </button>
-                  ) : (
-                    // Default: Simple text links with active state
-                    <button
-                      onClick={() => handleNavClick(item.href)}
-                      className={`group relative px-4 py-2 font-medium text-base transition-all duration-300 ${
-                        activeSection === item.href
-                          ? 'text-white'
-                          : 'text-white/90 hover:text-white'
-                      }`}
-                      style={{
-                        textShadow: activeSection === item.href
-                          ? '0 0 25px rgba(147, 197, 253, 0.6)'
-                          : '0 0 20px rgba(255, 255, 255, 0.3)',
-                      }}
-                    >
-                      <span className="relative z-10">{item.name}</span>
-                      {/* Gradient underline - always visible for active, on hover for others */}
-                      <span 
-                        className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-transform duration-300 origin-center ${
+            <div className="hidden md:flex items-center gap-3">
+              <ul className="flex items-center gap-2">
+                {navigation.map((item, index) => (
+                  <motion.li
+                    key={item.name}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05, duration: 0.4 }}
+                  >
+                    {isScrolled ? (
+                      <button
+                        onClick={() => handleNavClick(item.href)}
+                        className={`px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 ${
                           activeSection === item.href
-                            ? 'scale-x-100'
-                            : 'scale-x-0 group-hover:scale-x-100'
+                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-purple-500/30'
+                            : 'theme-glass theme-text-muted border hover:bg-white/10 hover:text-[color:var(--text-main)]'
+                        }`}
+                      >
+                        {item.name}
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleNavClick(item.href)}
+                        className={`group relative px-4 py-2 font-medium text-base transition-all duration-300 ${
+                          activeSection === item.href
+                            ? 'theme-text-main'
+                            : 'theme-text-muted hover:text-[color:var(--text-main)]'
                         }`}
                         style={{
-                          background: 'linear-gradient(90deg, #60A5FA 0%, #A78BFA 100%)',
-                          boxShadow: '0 0 10px rgba(147, 197, 253, 0.5)',
+                          textShadow: activeSection === item.href
+                            ? '0 0 25px rgba(147, 197, 253, 0.6)'
+                            : '0 0 20px rgba(255, 255, 255, 0.2)',
                         }}
-                      />
-                    </button>
-                  )}
-                </motion.li>
-              ))}
-            </ul>
+                      >
+                        <span className="relative z-10">{item.name}</span>
+                        <span 
+                          className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-transform duration-300 origin-center ${
+                            activeSection === item.href
+                              ? 'scale-x-100'
+                              : 'scale-x-0 group-hover:scale-x-100'
+                          }`}
+                          style={{
+                            background: 'linear-gradient(90deg, #60A5FA 0%, #A78BFA 100%)',
+                            boxShadow: '0 0 10px rgba(147, 197, 253, 0.5)',
+                          }}
+                        />
+                      </button>
+                    )}
+                  </motion.li>
+                ))}
+              </ul>
+              <ThemeToggle />
+            </div>
 
             {/* Mobile Menu Button */}
-            <button 
-              onClick={toggleMobileMenu}
-              className="md:hidden text-white p-2 z-50 relative hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Toggle menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              <motion.div
-                animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
-                transition={{ duration: 0.3 }}
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle className="px-2.5" />
+              <button 
+                onClick={toggleMobileMenu}
+                className="md:hidden theme-text-main p-2 z-50 relative hover:bg-white/10 rounded-lg transition-colors"
+                aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
               >
-                {mobileMenuOpen ? (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/>
-                    <line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                ) : (
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                  </svg>
-                )}
-              </motion.div>
-            </button>
+                <motion.div
+                  animate={{ rotate: mobileMenuOpen ? 90 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {mobileMenuOpen ? (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="18" y1="6" x2="6" y2="18"/>
+                      <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  ) : (
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="3" y1="12" x2="21" y2="12"/>
+                      <line x1="3" y1="6" x2="21" y2="6"/>
+                      <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                  )}
+                </motion.div>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -305,10 +309,7 @@ export default function Navigation() {
         initial={{ x: '100%' }}
         animate={{ x: mobileMenuOpen ? 0 : '100%' }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        className="fixed top-0 right-0 bottom-0 w-full md:hidden z-40 overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, #0A0A14 0%, #1a0a2e 50%, #0A0A14 100%)',
-        }}
+        className="theme-mobile-menu fixed top-0 right-0 bottom-0 w-full md:hidden z-40 overflow-hidden"
       >
         {/* Mobile menu gradient overlay */}
         <div 
@@ -332,7 +333,7 @@ export default function Navigation() {
               className={`text-3xl font-bold transition-all duration-300 ${
                 activeSection === item.href
                   ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400'
-                  : 'text-white/80 hover:text-white'
+                  : 'theme-text-muted hover:text-[color:var(--text-main)]'
               }`}
               style={{
                 textShadow: activeSection === item.href 

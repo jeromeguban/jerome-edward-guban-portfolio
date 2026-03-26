@@ -121,10 +121,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="py-24 px-6 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(to bottom, #000000 0%, #0B0B12 100%)",
-      }}
+      className="theme-section-primary relative overflow-hidden px-6 py-24"
     >
       <div
         className="absolute inset-0 pointer-events-none"
@@ -137,7 +134,7 @@ export default function Experience() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.65) 100%)",
+            "radial-gradient(circle at center, transparent 35%, var(--section-vignette) 100%)",
         }}
       />
       <div className="max-w-6xl mx-auto relative z-10">
@@ -204,7 +201,7 @@ export default function Experience() {
 
                   {/* Experience Card */}
                   <motion.div
-                    className="relative bg-white/5 backdrop-blur-lg rounded-3xl p-8 border transition-all duration-500 group cursor-pointer"
+                    className="theme-glass group relative cursor-pointer rounded-3xl border p-8 backdrop-blur-lg transition-all duration-500"
                     style={{
                       borderColor: borderColor,
                       boxShadow: `0 10px 40px ${iconGlow.replace(
@@ -223,7 +220,7 @@ export default function Experience() {
                   >
                     {/* Expand/Collapse Icon */}
                     <motion.button
-                      className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-10"
+                      className="theme-text-soft absolute top-6 right-6 z-10 transition-colors hover:text-[color:var(--text-main)]"
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
                     >
@@ -232,7 +229,7 @@ export default function Experience() {
 
                     {/* Header */}
                     <div className="pr-12">
-                      <h3 className="text-3xl md:text-4xl font-black text-white uppercase mb-2 tracking-tight">
+                      <h3 className="theme-text-main mb-2 text-3xl font-black uppercase tracking-tight md:text-4xl">
                         {experience.title}
                       </h3>
                       <p
@@ -243,11 +240,11 @@ export default function Experience() {
 
                       {/* Date, Location, Employment Type */}
                       <div className="flex flex-wrap items-center gap-4 mb-6">
-                        <div className="flex items-center gap-2 text-white/80">
+                        <div className="theme-text-muted flex items-center gap-2">
                           <Calendar size={18} />
                           <span className="text-sm">{experience.period}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-white/80">
+                        <div className="theme-text-muted flex items-center gap-2">
                           <MapPin size={18} />
                           <span className="text-sm">Philippines</span>
                         </div>
@@ -257,7 +254,7 @@ export default function Experience() {
                       </div>
 
                       {/* Description */}
-                      <p className="text-gray-300 leading-relaxed mb-6">
+                      <p className="theme-text-muted mb-6 leading-relaxed">
                         {renderHighlightedText(
                           experience.description,
                           experience.highlights,
@@ -277,10 +274,10 @@ export default function Experience() {
                           className="overflow-hidden"
                         >
                           {/* Key Achievements */}
-                          <div className="mb-6 pt-6 border-t border-white/10">
+                          <div className="theme-border-soft mb-6 border-t pt-6">
                             <div className="flex items-center gap-2 mb-4">
-                              <Key size={20} className="text-white" />
-                              <h4 className="text-lg font-bold text-white">
+                              <Key size={20} className="theme-text-main" />
+                              <h4 className="theme-text-main text-lg font-bold">
                                 Key Achievements
                               </h4>
                             </div>
@@ -291,7 +288,7 @@ export default function Experience() {
                                   initial={{ opacity: 0, x: -20 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: idx * 0.1 }}
-                                  className="flex items-start gap-3 text-gray-300"
+                                  className="theme-text-muted flex items-start gap-3"
                                 >
                                   <span className={`text-lg ${iconColor} mt-1`}>
                                     ⚡
@@ -305,10 +302,10 @@ export default function Experience() {
                           </div>
 
                           {/* Technologies Used */}
-                          <div className="pt-6 border-t border-white/10">
+                          <div className="theme-border-soft border-t pt-6">
                             <div className="flex items-center gap-2 mb-4">
-                              <Code size={20} className="text-white" />
-                              <h4 className="text-lg font-bold text-white">
+                              <Code size={20} className="theme-text-main" />
+                              <h4 className="theme-text-main text-lg font-bold">
                                 Technologies Used
                               </h4>
                             </div>
@@ -319,7 +316,7 @@ export default function Experience() {
                                   initial={{ opacity: 0, scale: 0.8 }}
                                   animate={{ opacity: 1, scale: 1 }}
                                   transition={{ duration: 0.2 }}
-                                  className="px-4 py-2 bg-purple-900/30 text-white rounded-full text-sm font-medium border border-purple-500/20 hover:border-purple-500/40 transition-colors"
+                                  className="theme-glass theme-text-main rounded-full border border-purple-500/20 px-4 py-2 text-sm font-medium transition-colors hover:border-purple-500/40"
                                 >
                                   {tech}
                                 </motion.span>

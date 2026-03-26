@@ -46,7 +46,7 @@ export default function Projects() {
     <>
       <section
         id="projects"
-        className="relative overflow-hidden bg-black px-6 py-24"
+        className="theme-section-primary relative overflow-hidden px-6 py-24"
       >
         <div className="mx-auto max-w-7xl">
           {/* <SectionTitle>Projects</SectionTitle> */}
@@ -74,7 +74,7 @@ export default function Projects() {
                       setSelectedProject(project);
                     }
                   }}
-                  className="flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-shadow duration-300 hover:shadow-2xl hover:shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-400/70 focus:ring-offset-2 focus:ring-offset-black"
+                  className="theme-glass flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border backdrop-blur-md transition-shadow duration-300 hover:shadow-2xl hover:shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-400/70 focus:ring-offset-2 focus:ring-offset-black"
                 >
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-purple-900/30 to-blue-900/30">
                     <img
@@ -122,10 +122,10 @@ export default function Projects() {
                   </div>
 
                   <div className="flex flex-grow flex-col p-6">
-                    <h3 className="mb-2 text-2xl font-bold text-white transition-colors group-hover:text-purple-400">
+                    <h3 className="theme-text-main mb-2 text-2xl font-bold transition-colors group-hover:text-purple-400">
                       {project.title}
                     </h3>
-                    <p className="mb-4 leading-relaxed text-gray-300">
+                    <p className="theme-text-muted mb-4 leading-relaxed">
                       {project.description}
                     </p>
 
@@ -133,7 +133,7 @@ export default function Projects() {
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+                          className="theme-glass theme-text-main rounded-full border px-3 py-1 text-xs font-medium backdrop-blur-sm"
                         >
                           {tech}
                         </span>
@@ -275,7 +275,7 @@ function ProjectModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-title-${project.id}`}
-        className={`relative max-h-[90vh] w-full overflow-hidden rounded-[2rem] border border-white/20 bg-white/10 shadow-[0_30px_120px_rgba(15,23,42,0.65)] ${
+        className={`theme-panel relative max-h-[90vh] w-full overflow-hidden rounded-[2rem] border shadow-[0_30px_120px_rgba(15,23,42,0.65)] ${
           hasMultipleImages ? "max-w-6xl" : "max-w-5xl"
         }`}
         initial={{ opacity: 0, scale: 0.95, y: 24 }}
@@ -294,7 +294,7 @@ function ProjectModal({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition hover:bg-white/20"
+          className="theme-glass theme-text-main absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border transition hover:bg-white/20"
           aria-label="Close project details"
         >
           <X size={18} />
@@ -348,7 +348,7 @@ function ProjectModal({
                         event.stopPropagation();
                         goToPreviousImage();
                       }}
-                      className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      className="theme-glass theme-text-main absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border transition hover:bg-white/20"
                       aria-label="Previous project image"
                     >
                       <ChevronLeft size={18} />
@@ -360,13 +360,13 @@ function ProjectModal({
                         event.stopPropagation();
                         goToNextImage();
                       }}
-                      className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-slate-950/45 text-white transition hover:bg-slate-950/70"
+                      className="theme-glass theme-text-main absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border transition hover:bg-white/20"
                       aria-label="Next project image"
                     >
                       <ChevronRight size={18} />
                     </button>
 
-                    <div className="absolute right-4 bottom-4 flex-shrink-0 rounded-full border border-white/15 bg-slate-950/55 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-white/85">
+                    <div className="theme-glass-strong theme-text-main absolute right-4 bottom-4 flex-shrink-0 rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.18em]">
                       {activeImageIndex + 1} / {gallery.length}
                     </div>
                   </>
@@ -407,19 +407,19 @@ function ProjectModal({
           <div className="flex min-h-0 min-w-0 flex-col justify-between overflow-y-auto p-6 md:p-8">
             <div>
               {project.category ? (
-                <span className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em] text-purple-200">
+                <span className="theme-glass theme-text-soft mb-4 inline-flex rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.24em]">
                   {project.category}
                 </span>
               ) : null}
 
               <h3
                 id={`project-title-${project.id}`}
-                className="text-3xl font-black text-white md:text-4xl"
+                className="theme-text-main text-3xl font-black md:text-4xl"
               >
                 {project.title}
               </h3>
 
-              <p className="mt-4 text-base leading-7 text-slate-200/90 md:text-lg">
+              <p className="theme-text-muted mt-4 text-base leading-7 md:text-lg">
                 {project.description}
               </p>
 
@@ -431,7 +431,7 @@ function ProjectModal({
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
+                      className="theme-glass theme-text-main rounded-full border px-3.5 py-1.5 text-sm font-medium shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]"
                     >
                       {tech}
                     </span>
@@ -448,7 +448,7 @@ function ProjectModal({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/25"
+                    className="theme-glass theme-text-main inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition hover:bg-white/20"
                   >
                     <ExternalLink size={16} />
                     Live Project
@@ -460,7 +460,7 @@ function ProjectModal({
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-slate-950/35 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-950/55"
+                    className="theme-glass theme-text-main inline-flex items-center gap-2 rounded-full border px-5 py-3 text-sm font-semibold transition hover:bg-white/20"
                   >
                     <Github size={16} />
                     Source Code
@@ -489,7 +489,7 @@ function ProjectModal({
                 event.stopPropagation();
                 toggleZoom();
               }}
-              className="fixed top-4 right-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
+              className="theme-glass absolute top-4 right-4 z-[110] flex h-12 w-12 items-center justify-center rounded-full text-white backdrop-blur-md"
             >
               <X size={24} />
             </button>

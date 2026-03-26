@@ -18,7 +18,7 @@ export default function SectionTitle({ children, className = '' }: SectionTitleP
       initial="initial"
       whileInView="animate"
       viewport={{ once: true, margin: '-100px' }}
-      className={`text-4xl md:text-5xl font-bold text-white mb-6 ${className}`}
+      className={`theme-text-main text-4xl md:text-5xl font-bold mb-6 ${className}`}
     >
       {children}
     </motion.h2>

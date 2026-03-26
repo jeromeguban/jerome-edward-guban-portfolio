@@ -29,8 +29,8 @@ export default function Button({
   
   const variants = {
     primary: 'bg-purple-600 text-white hover:bg-purple-700 shadow-md shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50',
-    secondary: 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm',
-    outline: 'border-2 border-purple-500 text-white hover:bg-purple-600 hover:border-purple-600',
+    secondary: 'theme-glass theme-text-main hover:bg-white/20 backdrop-blur-sm border',
+    outline: 'border-2 border-purple-500 theme-text-main hover:bg-purple-600 hover:border-purple-600 hover:text-white',
   }
   
   const sizes = {

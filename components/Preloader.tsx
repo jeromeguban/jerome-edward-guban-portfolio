@@ -108,7 +108,7 @@ export default function Preloader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+          className="theme-section-secondary fixed inset-0 z-50 flex items-center justify-center"
         >
           {/* Animated background glow */}
           <div className="absolute inset-0 overflow-hidden">
@@ -165,7 +165,7 @@ export default function Preloader() {
                   }}
                   className="relative group"
                 >
-                  <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/20 group-hover:border-purple-400/50 transition-colors">
+                  <div className="theme-glass flex h-12 w-12 items-center justify-center rounded-full border backdrop-blur-sm transition-colors group-hover:border-purple-400/50">
                     <div className="w-6 h-6">{svg}</div>
                   </div>
                 </motion.div>
@@ -174,7 +174,7 @@ export default function Preloader() {
 
             {/* Progress Bar */}
             <div className="w-64 md:w-80 mt-4">
-              <div className="h-1 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+              <div className="theme-glass h-1 overflow-hidden rounded-full backdrop-blur-sm">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}

@@ -2,20 +2,36 @@
 
 import { MotionValue, motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useTheme } from "@/components/ThemeProvider";
 
 type StoryLineProps = {
   line: string;
   index: number;
   total: number;
   scrollYProgress: MotionValue<number>;
+  theme: "dark" | "light";
 };
 
-function StoryLine({ line, index, total, scrollYProgress }: StoryLineProps) {
+function StoryLine({
+  line,
+  index,
+  total,
+  scrollYProgress,
+  theme,
+}: StoryLineProps) {
   const segment = 1 / total;
   const center = segment * index + segment / 2;
   const spread = segment * 0.8;
   const start = Math.max(0, center - spread);
   const end = Math.min(1, center + spread);
+  const dimColor =
+    theme === "light" ? "rgba(15, 23, 42, 0.42)" : "rgba(255, 255, 255, 0.45)";
+  const activeColor =
+    theme === "light" ? "rgba(15, 23, 42, 1)" : "rgba(255, 255, 255, 1)";
+  const textShadow =
+    theme === "light"
+      ? "0 0 24px rgba(129, 140, 248, 0.12)"
+      : "0 0 24px rgba(255, 255, 255, 0.12)";
 
   const opacity = useTransform(
     scrollYProgress,
@@ -31,11 +47,7 @@ function StoryLine({ line, index, total, scrollYProgress }: StoryLineProps) {
   const color = useTransform(
     scrollYProgress,
     [start, center, end],
-    [
-      "rgba(255, 255, 255, 0.45)",
-      "rgba(255, 255, 255, 1)",
-      "rgba(255, 255, 255, 0.45)",
-    ]
+    [dimColor, activeColor, dimColor]
   );
   const filter = useTransform(
     scrollYProgress,
@@ -51,7 +63,7 @@ function StoryLine({ line, index, total, scrollYProgress }: StoryLineProps) {
         scale,
         color,
         filter,
-        textShadow: "0 0 24px rgba(255, 255, 255, 0.12)",
+        textShadow,
       }}
       className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-relaxed text-center px-4"
     >
@@ -66,6 +78,7 @@ function StoryLine({ line, index, total, scrollYProgress }: StoryLineProps) {
  */
 export default function About() {
   const containerRef = useRef<HTMLElement>(null);
+  const { theme } = useTheme();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 75%", "end 25%"],
@@ -86,10 +99,7 @@ export default function About() {
     <section
       ref={containerRef}
       id="about"
-      className="min-h-screen py-32 px-6 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(to bottom, #000000 0%, #0B0B12 100%)",
-      }}
+      className="theme-section-primary relative min-h-screen overflow-hidden px-6 py-32"
     >
       {/* Radial Glow Background */}
       <div
@@ -105,7 +115,7 @@ export default function About() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.6) 100%)",
+            "radial-gradient(circle at center, transparent 40%, var(--section-vignette) 100%)",
         }}
       />
 
@@ -119,12 +129,7 @@ export default function About() {
           className="text-center mb-16"
         >
           {/* Subtitle */}
-          <p
-            className="text-gray-400 text-xs md:text-sm uppercase tracking-[0.3em] mb-6 font-light"
-            style={{
-              letterSpacing: "0.3em",
-            }}
-          >
+          <p className="theme-text-soft mb-6 text-xs font-light uppercase tracking-[0.3em] md:text-sm">
             ABOUT ME
           </p>
 
@@ -152,6 +157,7 @@ export default function About() {
               index={index}
               total={storyLines.length}
               scrollYProgress={scrollYProgress}
+              theme={theme}
             />
           ))}
         </div>
@@ -160,7 +166,8 @@ export default function About() {
         <div
           className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
           style={{
-            background: "linear-gradient(to top, #0B0B12 0%, transparent 100%)",
+            background:
+              "linear-gradient(to top, var(--section-fade-base) 0%, transparent 100%)",
           }}
         />
 
@@ -171,7 +178,7 @@ export default function About() {
           viewport={{ once: true }}
           className="text-center mt-40 relative z-10"
         >
-          <p className="text-gray-500 text-xs uppercase tracking-[0.3em] mb-6">
+          <p className="theme-text-soft mb-6 text-xs uppercase tracking-[0.3em]">
             SCROLL
           </p>
           <motion.div
@@ -186,7 +193,7 @@ export default function About() {
               fill="none"
               stroke="currentColor"
               strokeWidth="2"
-              className="text-gray-500"
+              className="theme-text-soft"
             >
               <path d="M12 5v14M19 12l-7 7-7-7" />
             </svg>

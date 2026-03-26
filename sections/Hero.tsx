@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 import { personalInfo } from "@/data/portfolio";
 import { scaleIn } from "@/lib/animations";
 import { scrollToElement } from "@/lib/utils";
@@ -11,9 +12,12 @@ import { scrollToElement } from "@/lib/utils";
  * Features a full-screen clean design with the avatar dominating the right side
  */
 export default function Hero() {
+  const { theme } = useTheme();
   const [typedText, setTypedText] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullText = personalInfo.title;
+  const avatarSrc =
+    theme === "light" ? "/images/avatar-dark.png" : personalInfo.avatar;
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -47,11 +51,17 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 pt-20 lg:pt-24"
+      className="theme-section-hero relative flex min-h-screen items-center overflow-hidden pt-20 lg:pt-24"
     >
       {/* Subtle gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-transparent to-transparent z-[1]" />
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-purple-500/10 to-transparent" />
+      <div
+        className="absolute inset-0 z-[1]"
+        style={{ background: "var(--hero-side-overlay)" }}
+      />
+      <div
+        className="absolute top-0 right-0 h-full w-1/2"
+        style={{ background: "var(--hero-accent-overlay)" }}
+      />
 
       {/* Scattered Tech Stack Icons Around Avatar */}
       {/* React - Top Left of Avatar */}
@@ -70,7 +80,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-28 h-28 -translate-x-6 -translate-y-6 rounded-full border border-white/10 opacity-30"></div>
-          <div className="relative w-16 h-16 lg:w-18 lg:h-18 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-16 w-16 items-center justify-center rounded-2xl border p-3 shadow-xl backdrop-blur-sm lg:h-18 lg:w-18">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -101,7 +111,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-32 h-32 -translate-x-8 -translate-y-8 rounded-full border border-white/10 opacity-25"></div>
-          <div className="relative w-14 h-14 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-14 w-14 items-center justify-center rounded-2xl border p-3 shadow-xl backdrop-blur-sm lg:h-16 lg:w-16 xl:h-20 xl:w-20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -132,7 +142,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-24 h-24 -translate-x-5 -translate-y-5 rounded-full border border-white/12 opacity-30"></div>
-          <div className="relative w-16 h-16 lg:w-18 lg:h-18 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-16 w-16 items-center justify-center rounded-2xl border p-3 shadow-xl backdrop-blur-sm lg:h-18 lg:w-18">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -164,7 +174,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-28 h-28 -translate-x-6 -translate-y-6 rounded-full border border-white/12 opacity-35"></div>
-          <div className="relative w-16 h-16 lg:w-18 lg:h-18 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-16 w-16 items-center justify-center rounded-2xl border p-3 shadow-xl backdrop-blur-sm lg:h-18 lg:w-18">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -229,7 +239,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-28 h-28 -translate-x-7 -translate-y-7 rounded-full border border-white/10 opacity-30"></div>
-          <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-white/10 backdrop-blur-sm rounded-2xl p-2.5 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-12 w-12 items-center justify-center rounded-2xl border p-2.5 shadow-xl backdrop-blur-sm lg:h-14 lg:w-14 xl:h-16 xl:w-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 133"
@@ -267,7 +277,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-28 h-28 -translate-x-7 -translate-y-7 rounded-full border border-white/10 opacity-30"></div>
-          <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-white/10 backdrop-blur-sm rounded-2xl p-2.5 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-12 w-12 items-center justify-center rounded-2xl border p-2.5 shadow-xl backdrop-blur-sm lg:h-14 lg:w-14 xl:h-16 xl:w-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -298,7 +308,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-32 h-32 -translate-x-10 -translate-y-10 rounded-full border border-white/10 opacity-30"></div>
-          <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-white/10 backdrop-blur-sm rounded-2xl p-2.5 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-12 w-12 items-center justify-center rounded-2xl border p-2.5 shadow-xl backdrop-blur-sm lg:h-14 lg:w-14 xl:h-16 xl:w-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -356,7 +366,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-24 h-24 -translate-x-5 -translate-y-5 rounded-full border border-white/14 opacity-35"></div>
-          <div className="relative w-12 h-12 lg:w-14 lg:h-14 xl:w-16 xl:h-16 bg-white/10 backdrop-blur-sm rounded-2xl p-2.5 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-12 w-12 items-center justify-center rounded-2xl border p-2.5 shadow-xl backdrop-blur-sm lg:h-14 lg:w-14 xl:h-16 xl:w-16">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -391,7 +401,7 @@ export default function Hero() {
       >
         <div className="relative">
           <div className="absolute inset-0 w-24 h-24 -translate-x-5 -translate-y-5 rounded-full border border-white/12 opacity-30"></div>
-          <div className="relative w-16 h-16 lg:w-18 lg:h-18 bg-white/10 backdrop-blur-sm rounded-2xl p-3 border border-white/20 flex items-center justify-center shadow-xl">
+          <div className="theme-glass relative flex h-16 w-16 items-center justify-center rounded-2xl border p-3 shadow-xl backdrop-blur-sm lg:h-18 lg:w-18">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 128 128"
@@ -425,10 +435,10 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="relative z-20 flex flex-col justify-center items-center lg:items-start px-4 md:px-8 lg:px-10 xl:px-14 2xl:px-16 py-20 lg:py-0 w-full"
           >
-            <div className="w-full max-w-xl lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 lg:p-8 shadow-2xl mt-2 md:mt-32 lg:mt-0 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="theme-panel mt-2 flex w-full max-w-xl flex-col items-center rounded-3xl border p-6 text-center shadow-2xl backdrop-blur-xl md:mt-32 md:p-8 lg:mt-0 lg:max-w-xl lg:items-start lg:p-8 lg:text-left xl:max-w-2xl 2xl:max-w-3xl">
               {/* Open To Work Badge */}
               <div className="mb-4">
-                <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium border border-white/20">
+                <span className="theme-glass theme-text-main inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium backdrop-blur-sm">
                   <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                   Open To Work
                 </span>
@@ -442,14 +452,17 @@ export default function Hero() {
               </h1>
 
               {/* Job Title */}
-              <h2 className="text-2xl md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-semibold text-blue-200 min-h-[2.5rem] md:min-h-[3rem] mb-6">
+              <h2
+                className="mb-6 min-h-[2.5rem] text-2xl font-semibold md:min-h-[3rem] md:text-3xl lg:text-2xl xl:text-3xl 2xl:text-4xl"
+                style={{ color: "var(--text-muted)" }}
+              >
                 {typedText}
                 <span className="animate-pulse ml-1">|</span>
               </h2>
 
               {/* Description */}
-              <p className="text-lg text-gray-300 leading-relaxed mb-8 max-w-xl">
-                <span className="text-2xl font-bold text-white">
+              <p className="theme-text-muted mb-8 max-w-xl text-lg leading-relaxed">
+                <span className="theme-text-main text-2xl font-bold">
                   Years of Experience
                 </span>{" "}
                 building robust backend architectures. Expert in APIs,
@@ -472,7 +485,7 @@ export default function Hero() {
                 <motion.a
                   href="/files/Jerome_Edward_Guban_CV.pdf"
                   download="Jerome_Edward_Guban_CV.pdf"
-                  className="px-8 py-4 bg-transparent border-2 border-white/30 text-white rounded-full font-semibold text-lg hover:bg-white/10 transition-all duration-200 flex items-center gap-2"
+                  className="theme-glass theme-text-main flex items-center gap-2 rounded-full border-2 px-8 py-4 text-lg font-semibold transition-all duration-200 hover:bg-white/10"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -491,12 +504,12 @@ export default function Hero() {
               </div>
 
               {/* Social Icons */}
-              <div className="flex gap-4 pt-6 border-t border-white/10 justify-center lg:justify-start">
+              <div className="theme-border-soft flex justify-center gap-4 border-t pt-6 lg:justify-start">
                 <motion.a
                   href="https://www.linkedin.com/in/jerome-edward/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20"
+                  className="theme-glass theme-text-main flex h-14 w-14 items-center justify-center rounded-2xl border transition-colors hover:bg-white/20"
                   whileHover={{ y: -3 }}
                 >
                   <svg
@@ -513,7 +526,7 @@ export default function Hero() {
                   href="https://www.facebook.com/imsupeeeeerdwaaaaard"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20"
+                  className="theme-glass theme-text-main flex h-14 w-14 items-center justify-center rounded-2xl border transition-colors hover:bg-white/20"
                   whileHover={{ y: -3 }}
                 >
                   <svg
@@ -540,7 +553,7 @@ export default function Hero() {
 
                 <motion.a
                   href="mailto:jeromeguban15@gmail.com"
-                  className="w-14 h-14 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-colors border border-white/20"
+                  className="theme-glass theme-text-main flex h-14 w-14 items-center justify-center rounded-2xl border transition-colors hover:bg-white/20"
                   whileHover={{ y: -3 }}
                 >
                   <svg
@@ -553,7 +566,7 @@ export default function Hero() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="text-gray-300 group-hover:text-white transition-colors"
+                    className="theme-text-muted transition-colors"
                   >
                     <rect width="20" height="16" x="2" y="4" rx="2" />
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
@@ -574,11 +587,14 @@ export default function Hero() {
             {/* Avatar Container - Bottom aligned, much larger */}
             <div className="relative w-full max-w-[600px] md:max-w-[700px] lg:max-w-[550px] xl:max-w-[800px] 2xl:max-w-[950px]">
               {/* Glowing background effect */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-gradient-to-t from-purple-500/30 via-blue-500/15 to-transparent rounded-full blur-3xl" />
+              <div
+                className="absolute bottom-0 left-1/2 h-[80%] w-[120%] -translate-x-1/2 rounded-full blur-3xl"
+                style={{ background: "var(--hero-avatar-glow)" }}
+              />
 
               {/* Profile Image - Bottom aligned */}
               <motion.img
-                src="/images/avatar.png"
+                src={avatarSrc}
                 alt={personalInfo.name}
                 className="relative w-full h-auto object-contain object-bottom drop-shadow-2xl cursor-pointer z-10"
                 whileHover={{

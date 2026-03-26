@@ -10,7 +10,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-black py-24 px-6">
+    <footer className="theme-section-primary relative overflow-hidden px-6 py-24">
       <motion.div
         variants={fadeInUp}
         initial="initial"
@@ -18,7 +18,7 @@ export default function Footer() {
         viewport={{ once: true }}
         className="max-w-7xl mx-auto text-center"
       >
-        <p className="text-gray-300">
+        <p className="theme-text-muted">
           © {currentYear} Jerome Edward Guban. All rights reserved.
         </p>
       </motion.div>

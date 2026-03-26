@@ -27,7 +27,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-black py-24 px-6"
+      className="theme-section-primary relative overflow-hidden px-6 py-24"
     >
       <div className="max-w-4xl mx-auto text-center">
         <SectionTitle className="text-center">{contact.title}</SectionTitle>
@@ -37,7 +37,7 @@ export default function Contact() {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
-          className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto"
+          className="theme-text-muted mx-auto mb-12 max-w-2xl text-xl"
         >
           {contact.description}
         </motion.p>
@@ -82,7 +82,7 @@ export default function Contact() {
                 variants={iconBounce}
                 initial="rest"
                 whileHover="hover"
-                className="p-4 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-purple-600 hover:text-white transition-colors duration-200 border border-white/20"
+                className="theme-glass theme-text-main rounded-full border p-4 backdrop-blur-sm transition-colors duration-200 hover:bg-purple-600 hover:text-white"
               >
                 <Icon size={24} />
               </motion.a>
