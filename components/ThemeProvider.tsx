@@ -11,6 +11,7 @@ import {
 type Theme = "dark" | "light";
 
 type ThemeContextValue = {
+  hydrated: boolean;
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
@@ -30,23 +31,29 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof document === "undefined") {
-      return "dark";
-    }
-
-    return document.documentElement.dataset.theme === "light"
-      ? "light"
-      : "dark";
-  });
+  const [theme, setTheme] = useState<Theme>("dark");
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    const initialTheme =
+      document.documentElement.dataset.theme === "light" ? "light" : "dark";
+
+    setTheme(initialTheme);
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+
     applyTheme(theme);
     window.localStorage.setItem(STORAGE_KEY, theme);
-  }, [theme]);
+  }, [hydrated, theme]);
 
   const value = useMemo(
     () => ({
+      hydrated,
       theme,
       setTheme,
       toggleTheme: () =>
@@ -54,7 +61,7 @@ export default function ThemeProvider({
           currentTheme === "dark" ? "light" : "dark"
         ),
     }),
-    [theme]
+    [hydrated, theme]
   );
 
   return (

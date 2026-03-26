@@ -9,8 +9,13 @@ export default function ThemeToggle({
 }: {
   className?: string;
 }) {
-  const { theme, toggleTheme } = useTheme();
+  const { hydrated, theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+  const label = hydrated
+    ? isDark
+      ? "Light mode"
+      : "Dark mode"
+    : "Theme";
 
   return (
     <button
@@ -26,23 +31,22 @@ export default function ThemeToggle({
         color: "var(--text-main)",
         boxShadow: "var(--shadow-soft)",
       }}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      aria-pressed={isDark}
+      aria-label={hydrated ? `Switch to ${isDark ? "light" : "dark"} mode` : "Toggle theme"}
+      aria-pressed={hydrated ? isDark : undefined}
     >
       <span
         className="flex h-8 w-8 items-center justify-center rounded-full transition-colors"
         style={{
-          background: isDark
-            ? "linear-gradient(135deg, #f59e0b 0%, #fb7185 100%)"
-            : "linear-gradient(135deg, #312e81 0%, #7c3aed 100%)",
+          background:
+            hydrated && !isDark
+              ? "linear-gradient(135deg, #312e81 0%, #7c3aed 100%)"
+              : "linear-gradient(135deg, #f59e0b 0%, #fb7185 100%)",
           color: "#ffffff",
         }}
       >
-        {isDark ? <Sun size={16} /> : <Moon size={16} />}
+        {hydrated ? (isDark ? <Sun size={16} /> : <Moon size={16} />) : <Sun size={16} />}
       </span>
-      <span className="hidden sm:inline">
-        {isDark ? "Light mode" : "Dark mode"}
-      </span>
+      <span className="hidden sm:inline">{label}</span>
     </button>
   );
 }
