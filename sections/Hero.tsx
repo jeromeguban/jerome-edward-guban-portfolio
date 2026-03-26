@@ -1,11 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/components/ThemeProvider";
 import { personalInfo } from "@/data/portfolio";
 import { scaleIn } from "@/lib/animations";
 import { scrollToElement } from "@/lib/utils";
+
+const avatarTransitionFrames = [
+  "/images/avatar-transition/start.png",
+  "/images/avatar-transition/1.png",
+  "/images/avatar-transition/3.png",
+  "/images/avatar-transition/4.png",
+  "/images/avatar-transition/5.png",
+  "/images/avatar-transition/6.png",
+  "/images/avatar-transition/7.png",
+  "/images/avatar-transition/end.png",
+];
+
+const coverAvatarFrames = [
+  "/images/avatar-transition/start.png",
+  "/images/avatar-transition/end.png",
+];
+
+const avatarFrameMap = {
+  dark: [...avatarTransitionFrames].reverse(),
+  light: avatarTransitionFrames,
+} as const;
 
 /**
  * Hero section with animated text, large profile image, and floating tech icons
@@ -14,10 +35,15 @@ import { scrollToElement } from "@/lib/utils";
 export default function Hero() {
   const { theme } = useTheme();
   const [typedText, setTypedText] = useState("");
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
   const fullText = personalInfo.title;
-  const avatarSrc =
-    theme === "light" ? "/images/avatar-dark.png" : personalInfo.avatar;
+  const [avatarSrc, setAvatarSrc] = useState(
+    theme === "light"
+      ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
+      : avatarTransitionFrames[0]
+  );
+  const hasHydratedTheme = useRef(false);
+  const avatarAnimationTimeouts = useRef<number[]>([]);
+  const shouldCoverAvatarFrame = coverAvatarFrames.includes(avatarSrc);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -47,6 +73,39 @@ export default function Hero() {
 
     return () => clearTimeout(timeout);
   }, [fullText]);
+
+  useEffect(() => {
+    avatarAnimationTimeouts.current.forEach((timeoutId) =>
+      window.clearTimeout(timeoutId)
+    );
+    avatarAnimationTimeouts.current = [];
+
+    const finalFrame =
+      theme === "light"
+        ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
+        : avatarTransitionFrames[0];
+
+    if (!hasHydratedTheme.current) {
+      setAvatarSrc(finalFrame);
+      hasHydratedTheme.current = true;
+      return;
+    }
+
+    avatarFrameMap[theme].forEach((frame, index) => {
+      const timeoutId = window.setTimeout(() => {
+        setAvatarSrc(frame);
+      }, index * 70);
+
+      avatarAnimationTimeouts.current.push(timeoutId);
+    });
+
+    return () => {
+      avatarAnimationTimeouts.current.forEach((timeoutId) =>
+        window.clearTimeout(timeoutId)
+      );
+      avatarAnimationTimeouts.current = [];
+    };
+  }, [theme]);
 
   return (
     <section
@@ -585,24 +644,32 @@ export default function Hero() {
             className="relative z-10 flex items-end justify-center pt-10 pb-0 lg:py-0"
           >
             {/* Avatar Container - Bottom aligned, much larger */}
-            <div className="relative w-full max-w-[600px] md:max-w-[700px] lg:max-w-[550px] xl:max-w-[800px] 2xl:max-w-[950px]">
+            <div className="relative w-full max-w-[390px] md:max-w-[470px] lg:max-w-[380px] xl:max-w-[560px] 2xl:max-w-[700px]">
               {/* Glowing background effect */}
               <div
                 className="absolute bottom-0 left-1/2 h-[80%] w-[120%] -translate-x-1/2 rounded-full blur-3xl"
                 style={{ background: "var(--hero-avatar-glow)" }}
               />
 
-              {/* Profile Image - Bottom aligned */}
-              <motion.img
-                src={avatarSrc}
-                alt={personalInfo.name}
-                className="relative w-full h-auto object-contain object-bottom drop-shadow-2xl cursor-pointer z-10"
+              {/* Fixed portrait stage keeps all transition frames visually stable */}
+              <motion.div
+                className="relative z-10 aspect-[3375/4219] w-full cursor-pointer overflow-hidden"
                 whileHover={{
                   scale: 1.02,
                   transition: { duration: 0.3 },
                 }}
                 whileTap={{ scale: 0.98 }}
-              />
+              >
+                <img
+                  src={avatarSrc}
+                  alt={personalInfo.name}
+                  className={`absolute inset-0 h-full w-full drop-shadow-2xl ${
+                    shouldCoverAvatarFrame
+                      ? "object-cover object-bottom"
+                      : "object-contain object-bottom"
+                  }`}
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
