@@ -145,6 +145,25 @@ export const projects = [
     description:
       "E-commerce and Online Bidding website for HMR Philippines Inc.",
     image: "/images/project1.jpg",
+    images: [
+      "/images/shop1.avif",
+      "/images/shop2.avif",
+      "/images/shop3.avif",
+      "/images/shop4.avif",
+      "/images/shop5.avif",
+      "/images/shop6.avif",
+      "/images/shop7.avif",
+      "/images/shop8.avif",
+      "/images/shop9.avif",
+      "/images/shop10.avif",
+      "/images/shop11.avif",
+      "/images/shop12.avif",
+      "/images/shop14.avif",
+      "/images/shop15.avif",
+      "/images/shop16.avif",
+      "/images/shop17.avif",
+      "/images/shop18.avif",
+    ],
     technologies: [
       "Laravel",
       "PHP",
@@ -165,7 +184,7 @@ export const projects = [
     title: "Hammer 3.0",
     category: "Warehouse System",
     description:
-      "A Warehouse Management System that handles business' entire inventory and operations",
+      "A Warehouse Management System for HMR Philippines Inc. that handles business' entire inventory and operations",
     image: "/images/2.webp",
     technologies: [
       "Laravel",
@@ -186,8 +205,16 @@ export const projects = [
     id: 3,
     title: "HMR CMS",
     category: "CMS",
-    description: "Content Management System For Shop N' Bid",
+    description:
+      "Custom Content Management & Drag-and-Drop Page Builder For Shop N' Bid",
     image: "/images/3.webp",
+    images: [
+      "/images/3.webp",
+      "/images/cms-2.avif",
+      "/images/cms2.png",
+      "/images/cms3.png",
+      "/images/cms4.png",
+    ],
     technologies: [
       "Laravel",
       "PHP",
@@ -249,7 +276,14 @@ export const projects = [
     title: "Seller Platform",
     category: "Seller Platform",
     description: "Seller Platform for HMR Shop N' Bid",
-    image: "/images/6.webp",
+    image: "/images/seller1.png",
+    images: [
+      "/images/seller1.png",
+      "/images/seller2.png",
+      "/images/seller3.png",
+      "/images/seller4.png",
+      "/images/seller5.png",
+    ],
     technologies: [
       "Laravel",
       "PHP",
@@ -271,6 +305,7 @@ export const projects = [
     description:
       "HMR Shop N' Bid Live Auction Controller using WebRTC and Ant Media Server",
     image: "/images/7.webp",
+    images: ["/images/7.webp", "/images/shop10.avif", "/images/shop11.avif"],
     technologies: [
       "Laravel",
       "PHP",
@@ -318,6 +353,21 @@ export const projects = [
     category: "E-commerce",
     description: "E-commerce website for Recherche",
     image: "/images/9.png",
+    images: [
+      "/images/recherche-1.avif",
+      "/images/recherche-2.avif",
+      "/images/recherche-3.avif",
+      "/images/recherche-4.avif",
+      "/images/recherche-5.avif",
+      "/images/recherche-6.avif",
+      "/images/recherche-7.avif",
+      "/images/recherche-8.avif",
+      "/images/recherche-9.avif",
+      "/images/recherche-10.avif",
+      "/images/recherche-11.avif",
+      "/images/recherche-12.avif",
+      "/images/recherche-13.avif",
+    ],
     technologies: [
       "Laravel",
       "PHP",
@@ -336,6 +386,11 @@ export const projects = [
     category: "CMS",
     description: "Content management system for Recherche E-commerce",
     image: "/images/10.png",
+    images: [
+      "/images/10.png",
+      "/images/recherechecms1.png",
+      "/images/recherechecms2.png",
+    ],
     technologies: [
       "Laravel",
       "PHP",
@@ -404,6 +459,15 @@ export const projects = [
     description:
       "A combination of Inventory Management System (IMS) and Warehouse Management System (WMS) for HMR Shop N' Bid, covering both retail and auction operations.",
     image: "/images/xv3.png",
+    images: [
+      "/images/xv3.png",
+      "/images/xv31.png",
+      "/images/xv32.png",
+      "/images/xv33.png",
+      "/images/xv34.png",
+      "/images/xv35.png",
+      "/images/xv36.png",
+    ],
     technologies: [
       "Laravel",
       "PHP",
