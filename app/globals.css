@@ -300,6 +300,20 @@
   color: var(--text-muted);
 }
 
+:root[data-theme="light"] .text-green-300,
+:root[data-theme="light"] .text-green-400 {
+  color: #15803d; /* Tailwind green-700 */
+}
+
+:root[data-theme="light"] .text-fuchsia-200,
+:root[data-theme="light"] .text-fuchsia-400 {
+  color: #a21caf; /* Tailwind fuchsia-700 */
+}
+
+:root[data-theme="light"] .text-purple-400 {
+  color: #7e22ce; /* Tailwind purple-700 */
+}
+
 :root[data-theme="light"] .group:hover .group-hover\:text-white {
   color: var(--text-main);
 }

@@ -40,7 +40,7 @@ export default function Experience() {
       return text;
     }
 
-    const uniqueHighlights = [...new Set(highlights)].sort(
+    const uniqueHighlights = Array.from(new Set(highlights)).sort(
       (first, second) => second.length - first.length
     );
     const highlightMatcher = new RegExp(
