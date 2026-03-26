@@ -36,6 +36,7 @@ export default function Hero() {
   const { theme } = useTheme();
   const [typedText, setTypedText] = useState("");
   const fullText = personalInfo.title;
+  const [avatarFramesReady, setAvatarFramesReady] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState(
     theme === "light"
       ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
@@ -75,6 +76,38 @@ export default function Hero() {
   }, [fullText]);
 
   useEffect(() => {
+    let isCancelled = false;
+
+    const preloadFrames = async () => {
+      const frameLoads = avatarTransitionFrames.map((frame) => {
+        const image = new Image();
+        image.src = frame;
+
+        if (image.complete) {
+          return Promise.resolve();
+        }
+
+        return new Promise<void>((resolve) => {
+          image.onload = () => resolve();
+          image.onerror = () => resolve();
+        });
+      });
+
+      await Promise.all(frameLoads);
+
+      if (!isCancelled) {
+        setAvatarFramesReady(true);
+      }
+    };
+
+    preloadFrames();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     avatarAnimationTimeouts.current.forEach((timeoutId) =>
       window.clearTimeout(timeoutId)
     );
@@ -88,6 +121,11 @@ export default function Hero() {
     if (!hasHydratedTheme.current) {
       setAvatarSrc(finalFrame);
       hasHydratedTheme.current = true;
+      return;
+    }
+
+    if (!avatarFramesReady) {
+      setAvatarSrc(finalFrame);
       return;
     }
 
@@ -105,7 +143,7 @@ export default function Hero() {
       );
       avatarAnimationTimeouts.current = [];
     };
-  }, [theme]);
+  }, [theme, avatarFramesReady]);
 
   return (
     <section
