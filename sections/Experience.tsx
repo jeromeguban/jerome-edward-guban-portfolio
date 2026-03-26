@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { experiences } from "@/data/portfolio";
 import SectionTitle from "@/components/SectionTitle";
-import { sectionReveal, fadeInUp } from "@/lib/animations";
+import { fadeInUp } from "@/lib/animations";
 import {
   Calendar,
   MapPin,
@@ -14,6 +14,9 @@ import {
   Trophy,
   TrendingUp,
 } from "lucide-react";
+
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 /**
  * Experience section with premium timeline design
@@ -26,6 +29,43 @@ export default function Experience() {
     setExpandedCards((prev) =>
       prev.includes(id) ? prev.filter((cardId) => cardId !== id) : [...prev, id]
     );
+  };
+
+  const renderHighlightedText = (
+    text: string,
+    highlights: string[] = [],
+    highlightClassName: string
+  ) => {
+    if (highlights.length === 0) {
+      return text;
+    }
+
+    const uniqueHighlights = [...new Set(highlights)].sort(
+      (first, second) => second.length - first.length
+    );
+    const highlightMatcher = new RegExp(
+      `(${uniqueHighlights.map(escapeRegExp).join("|")})`,
+      "gi"
+    );
+
+    return text.split(highlightMatcher).filter(Boolean).map((part, index) => {
+      const isHighlighted = uniqueHighlights.some(
+        (highlight) => highlight.toLowerCase() === part.toLowerCase()
+      );
+
+      if (!isHighlighted) {
+        return <Fragment key={`${part}-${index}`}>{part}</Fragment>;
+      }
+
+      return (
+        <span
+          key={`${part}-${index}`}
+          className={`rounded-md px-1 py-0.5 font-semibold ${highlightClassName}`}
+        >
+          {part}
+        </span>
+      );
+    });
   };
 
   const experienceIcons = [
@@ -128,6 +168,10 @@ export default function Experience() {
                   : "rgba(168, 85, 247, 0.5)";
               const companyColor =
                 index === 0 ? "text-green-400" : "text-purple-400";
+              const highlightClassName =
+                index === 0
+                  ? "text-green-300 bg-green-400/10 shadow-[0_0_16px_rgba(74,222,128,0.12)]"
+                  : "text-fuchsia-200 bg-fuchsia-500/10 shadow-[0_0_16px_rgba(217,70,239,0.12)]";
               const isExpanded = expandedCards.includes(experience.id);
               const achievements = getAchievements(
                 experience.description,
@@ -214,7 +258,11 @@ export default function Experience() {
 
                       {/* Description */}
                       <p className="text-gray-300 leading-relaxed mb-6">
-                        {experience.description}
+                        {renderHighlightedText(
+                          experience.description,
+                          experience.highlights,
+                          highlightClassName
+                        )}
                       </p>
                     </div>
 
