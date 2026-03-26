@@ -62,13 +62,10 @@ const themeInitScript = `
     try {
       var storageKey = "portfolio-theme";
       var storedTheme = window.localStorage.getItem(storageKey);
-      var systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
       var theme =
         storedTheme === "light" || storedTheme === "dark"
           ? storedTheme
-          : systemTheme;
+          : "dark";
 
       document.documentElement.dataset.theme = theme;
       document.documentElement.style.colorScheme = theme;
@@ -85,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {/* Additional meta tags for better link preview compatibility */}
