@@ -65,16 +65,19 @@ export default function Hero() {
   const [typedText, setTypedText] = useState("");
   const fullText = personalInfo.title;
   const [avatarFramesReady, setAvatarFramesReady] = useState(false);
-  const [avatarSrc, setAvatarSrc] = useState(
+  const initialAvatarSrc =
     theme === "light"
       ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
-      : avatarTransitionFrames[0]
-  );
+      : avatarTransitionFrames[0];
+  const [layerA, setLayerA] = useState(initialAvatarSrc);
+  const [layerB, setLayerB] = useState(initialAvatarSrc);
+  const [activeIsA, setActiveIsA] = useState(true);
   const hasHydratedTheme = useRef(false);
   const avatarAnimationTimeouts = useRef<number[]>([]);
-  const shouldCoverAvatarFrame =
-    avatarSrc === avatarTransitionFrames[0] ||
-    avatarSrc === avatarTransitionFrames[avatarTransitionFrames.length - 1];
+
+  const isCoverFrame = (src: string) =>
+    src === avatarTransitionFrames[0] ||
+    src === avatarTransitionFrames[avatarTransitionFrames.length - 1];
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -148,21 +151,33 @@ export default function Hero() {
         ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
         : avatarTransitionFrames[0];
 
+    const jumpToFrame = (src: string) => {
+      setLayerA(src);
+      setLayerB(src);
+      setActiveIsA(true);
+    };
+
     if (!hasHydratedTheme.current) {
-      setAvatarSrc(finalFrame);
+      jumpToFrame(finalFrame);
       hasHydratedTheme.current = true;
       return;
     }
 
     if (!avatarFramesReady) {
-      setAvatarSrc(finalFrame);
+      jumpToFrame(finalFrame);
       return;
     }
 
     avatarFrameMap[theme].forEach((frame, index) => {
       const timeoutId = window.setTimeout(() => {
-        setAvatarSrc(frame);
-      }, index * 70);
+        if (index % 2 === 0) {
+          setLayerB(frame);
+          requestAnimationFrame(() => setActiveIsA(false));
+        } else {
+          setLayerA(frame);
+          requestAnimationFrame(() => setActiveIsA(true));
+        }
+      }, index * 40);
 
       avatarAnimationTimeouts.current.push(timeoutId);
     });
@@ -729,13 +744,25 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <img
-                  src={avatarSrc}
+                  src={layerA}
                   alt={personalInfo.name}
-                  className={`absolute inset-0 h-full w-full drop-shadow-2xl ${
-                    shouldCoverAvatarFrame
+                  className={`absolute inset-0 h-full w-full drop-shadow-2xl transition-opacity ease-linear ${
+                    isCoverFrame(layerA)
                       ? "object-cover object-bottom"
                       : "object-contain object-bottom"
                   }`}
+                  style={{ opacity: activeIsA ? 1 : 0, transitionDuration: "40ms" }}
+                />
+                <img
+                  src={layerB}
+                  alt=""
+                  aria-hidden="true"
+                  className={`absolute inset-0 h-full w-full drop-shadow-2xl transition-opacity ease-linear ${
+                    isCoverFrame(layerB)
+                      ? "object-cover object-bottom"
+                      : "object-contain object-bottom"
+                  }`}
+                  style={{ opacity: activeIsA ? 0 : 1, transitionDuration: "40ms" }}
                 />
               </motion.div>
             </div>

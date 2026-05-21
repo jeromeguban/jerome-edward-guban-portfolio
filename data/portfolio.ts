@@ -26,7 +26,7 @@ export const experiences = [
     id: 1,
     title: "Mid Web Developer",
     company: "Electro Premier Venture Inc Intl",
-    period: "JUNE 2024 - JANUARY 2026",
+    period: "JUNE 2024 - MAY 2026",
     description:
       "Developed core business systems including HRIS, eCommerce, IMS, and a Virtual Calling Card platform to improve workflow automation and operational efficiency. Integrated 3PL APIs (Shopee Express, GoGo Express, Lalamove, Flash Express, J&T Express), cron automations, and internal modules to streamline fulfillment and day-to-day operations. Implemented third-party integrations with Google Gemini, Google Marketplace, Gmail API, and Semaphore SMS API for automated product identification, data extraction, price comparison, and user verification, while maintaining secure and scalable Laravel/PHP code.",
     highlights: [
