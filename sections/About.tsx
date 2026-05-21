@@ -33,26 +33,28 @@ function StoryLine({
       ? "0 0 24px rgba(129, 140, 248, 0.12)"
       : "0 0 24px rgba(255, 255, 255, 0.12)";
 
+  const isFirst = index === 0;
+
   const opacity = useTransform(
     scrollYProgress,
     [start, center, end],
-    [0.3, 1, 0.3]
+    [isFirst ? 1 : 0.3, 1, 0.3]
   );
-  const y = useTransform(scrollYProgress, [start, center, end], [28, 0, -28]);
+  const y = useTransform(scrollYProgress, [start, center, end], [isFirst ? 0 : 28, 0, -28]);
   const scale = useTransform(
     scrollYProgress,
     [start, center, end],
-    [0.96, 1.03, 0.96]
+    [isFirst ? 1.03 : 0.96, 1.03, 0.96]
   );
   const color = useTransform(
     scrollYProgress,
     [start, center, end],
-    [dimColor, activeColor, dimColor]
+    [isFirst ? activeColor : dimColor, activeColor, dimColor]
   );
   const filter = useTransform(
     scrollYProgress,
     [start, center, end],
-    ["blur(1.5px)", "blur(0px)", "blur(1.5px)"]
+    [isFirst ? "blur(0px)" : "blur(1.5px)", "blur(0px)", "blur(1.5px)"]
   );
 
   return (
@@ -78,21 +80,24 @@ function StoryLine({
  */
 export default function About() {
   const containerRef = useRef<HTMLElement>(null);
+  const storiesRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 75%", "end 25%"],
+    target: storiesRef,
+    offset: ["start 85%", "end 15%"],
   });
 
   const storyLines = [
-    "Hey there, I'm Jerome, but you can call me Edward. Started from humble beginnings to architecting scalable backend systems.",
-    "6 years in the industry, and every day is still a chance to learn something new.",
-    "I build systems that matter - APIs, databases, integrations, and the business logic behind them.",
-    "Each project a new challenge, every line of code with purpose.",
-    "Not just writing code, but solving real problems.",
-    "From concept to deployment, making the web a better place, one commit at a time.",
-    "This is my story, still being written.",
-    "Let's create the next chapter together.",
+    "My name is Edward , 6 years doing what I genuinely love.",
+    "Building backend systems that work, scale, and make people's lives easier.",
+    "From growing startups to enterprise-level operations , REST APIs, database schemas, business logic, and third-party integrations.",
+    "My go-to: Laravel & PHP on the backend, paired with MySQL, Redis for caching, and Elasticsearch when search needs to be fast and smart.",
+    "On the frontend, I'm comfortable in both Vue.js and React.js , I collaborate closely or jump in when needed.",
+    "Built real-time features using WebRTC, Ant Media Server, and WebSockets for live auction and live selling platforms , some of the most exciting challenges I've tackled.",
+    "Across 20+ delivered projects , warehouse & inventory systems, eCommerce platforms, HRIS, CMS tools, and multi-vendor POS solutions.",
+    "Integrated Lalamove, J&T, Shopee Express, Google Gemini, Gmail API, and SMS services. If there's an API involved, I've probably wired it up.",
+    "I enjoy mentoring junior devs and being a dependable teammate. Great backend work is invisible , when it's done right, everything just runs.",
+    "I'd genuinely love to chat about how I can contribute to your team.",
   ];
 
   return (
@@ -149,7 +154,7 @@ export default function About() {
         </motion.div>
 
         {/* Story Lines - Premium Style */}
-        <div className="space-y-16 mt-20">
+        <div ref={storiesRef} className="space-y-16 mt-20">
           {storyLines.map((line, index) => (
             <StoryLine
               key={line}
