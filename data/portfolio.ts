@@ -8,7 +8,6 @@ export const personalInfo = {
   subtitle: "Building scalable and efficient systems",
   email: "jeromeguban02@gmail.com",
   location: "Philippines",
-  avatar: "/images/avatar.png", // Add your image to public/images/
 };
 
 export const navigation = [

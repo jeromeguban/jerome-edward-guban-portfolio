@@ -161,6 +161,55 @@
   }
 }
 
+/*
+ * Hero avatar theme morph.
+ *
+ * Nothing here transitions on purpose. This is a frame sequence, so every
+ * change has to be a hard cut -- crossfading two alpha cutouts of a moving
+ * subject over the hero glow produces a permanent double image.
+ *
+ * The rest images are what the hero holds between transitions, keyed off
+ * [data-theme] so the right one paints before hydration. The sprite layer is
+ * only visible while the morph plays.
+ */
+.avatar-rest,
+.avatar-sprite {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.avatar-rest {
+  opacity: 0;
+  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+}
+
+.avatar-sprite {
+  opacity: 0;
+  background-image: url("/images/avatar-sprite.webp");
+  background-repeat: no-repeat;
+  /* SPRITE_COLS x SPRITE_ROWS in sections/Hero.tsx */
+  background-size: 800% 500%;
+  background-position: 0% 0%;
+  will-change: background-position;
+}
+
+:root[data-theme="dark"] .avatar-rest-dark,
+:root[data-theme="light"] .avatar-rest-light {
+  opacity: 1;
+}
+
+/* No drop-shadow on the sprite: a filter over content that repaints every
+   frame would be re-evaluated 25 times a second. */
+.avatar-stage[data-transitioning="true"] .avatar-rest {
+  opacity: 0;
+}
+
+.avatar-stage[data-transitioning="true"] .avatar-sprite {
+  opacity: 1;
+}
+
 /* Custom Scrollbar */
 * {
   scrollbar-width: thin;

@@ -7,54 +7,25 @@ import { personalInfo } from "@/data/portfolio";
 import { scaleIn } from "@/lib/animations";
 import { scrollToElement } from "@/lib/utils";
 
-const avatarTransitionFrames = [
-  "/images/avatar-transition/start.png",
-  "/images/avatar-transition/1.svg",
-  "/images/avatar-transition/3.svg",
-  "/images/avatar-transition/4.svg",
-  "/images/avatar-transition/5.svg",
-  "/images/avatar-transition/6.svg",
-  "/images/avatar-transition/7.svg",
-  "/images/avatar-transition/8.svg",
-  "/images/avatar-transition/9.svg",
-  "/images/avatar-transition/10.svg",
-  "/images/avatar-transition/11.svg",
-  "/images/avatar-transition/12.svg",
-  "/images/avatar-transition/13.svg",
-  "/images/avatar-transition/14.svg",
-  "/images/avatar-transition/15.svg",
-  "/images/avatar-transition/16.svg",
-  "/images/avatar-transition/17.svg",
-  "/images/avatar-transition/18.svg",
-  "/images/avatar-transition/19.svg",
-  "/images/avatar-transition/20.svg",
-  "/images/avatar-transition/21.svg",
-  "/images/avatar-transition/22.svg",
-  "/images/avatar-transition/23.svg",
-  "/images/avatar-transition/24.svg",
-  "/images/avatar-transition/25.svg",
-  "/images/avatar-transition/26.svg",
-  "/images/avatar-transition/27.svg",
-  "/images/avatar-transition/28.svg",
-  "/images/avatar-transition/29.svg",
-  "/images/avatar-transition/30.svg",
-  "/images/avatar-transition/31.svg",
-  "/images/avatar-transition/32.svg",
-  "/images/avatar-transition/33.svg",
-  "/images/avatar-transition/34.svg",
-  "/images/avatar-transition/35.svg",
-  "/images/avatar-transition/36.svg",
-  "/images/avatar-transition/37.svg",
-  "/images/avatar-transition/38.svg",
-  "/images/avatar-transition/39.svg",
-  "/images/avatar-transition/40.svg",
-  "/images/avatar-transition/end.png",
-];
+/**
+ * The dark/light avatar morph plays off a single sprite sheet so the browser
+ * decodes one image instead of rasterising a frame per step. Geometry must
+ * stay in sync with scripts/build-avatar-sprite.py and the .avatar-sprite
+ * background-size in globals.css.
+ */
+const AVATAR_SPRITE_SRC = "/images/avatar-sprite.webp";
+const SPRITE_COLS = 8;
+const SPRITE_ROWS = 5;
+const FRAME_COUNT = 39;
+const FRAME_MS = 40;
 
-const avatarFrameMap = {
-  dark: [...avatarTransitionFrames].reverse(),
-  light: avatarTransitionFrames,
-} as const;
+// Percentage sprite math divides by (n - 1): 0% is the first cell, 100% the last.
+const FRAME_POSITIONS = Array.from({ length: FRAME_COUNT }, (_, index) => {
+  const col = index % SPRITE_COLS;
+  const row = Math.floor(index / SPRITE_COLS);
+
+  return `${(col * 100) / (SPRITE_COLS - 1)}% ${(row * 100) / (SPRITE_ROWS - 1)}%`;
+});
 
 /**
  * Hero section with animated text, large profile image, and floating tech icons
@@ -64,20 +35,11 @@ export default function Hero() {
   const { theme } = useTheme();
   const [typedText, setTypedText] = useState("");
   const fullText = personalInfo.title;
-  const [avatarFramesReady, setAvatarFramesReady] = useState(false);
-  const initialAvatarSrc =
-    theme === "light"
-      ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
-      : avatarTransitionFrames[0];
-  const [layerA, setLayerA] = useState(initialAvatarSrc);
-  const [layerB, setLayerB] = useState(initialAvatarSrc);
-  const [activeIsA, setActiveIsA] = useState(true);
-  const hasHydratedTheme = useRef(false);
-  const avatarAnimationTimeouts = useRef<number[]>([]);
-
-  const isCoverFrame = (src: string) =>
-    src === avatarTransitionFrames[0] ||
-    src === avatarTransitionFrames[avatarTransitionFrames.length - 1];
+  const [reduceMotion, setReduceMotion] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const spriteRef = useRef<HTMLDivElement>(null);
+  const spriteImageRef = useRef<HTMLImageElement | null>(null);
+  const hasPlayedInitialTheme = useRef(false);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -109,86 +71,74 @@ export default function Hero() {
   }, [fullText]);
 
   useEffect(() => {
-    let isCancelled = false;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(query.matches);
 
-    const preloadFrames = async () => {
-      const frameLoads = avatarTransitionFrames.map((frame) => {
-        const image = new Image();
-        image.src = frame;
+    sync();
+    query.addEventListener("change", sync);
 
-        if (image.complete) {
-          return Promise.resolve();
-        }
+    return () => query.removeEventListener("change", sync);
+  }, []);
 
-        return new Promise<void>((resolve) => {
-          image.onload = () => resolve();
-          image.onerror = () => resolve();
-        });
+  // Decode the sheet once up front and hold the reference so it survives GC.
+  useEffect(() => {
+    const image = new window.Image();
+    image.src = AVATAR_SPRITE_SRC;
+
+    image
+      .decode()
+      .then(() => {
+        spriteImageRef.current = image;
+      })
+      .catch(() => {
+        spriteImageRef.current = null;
       });
-
-      await Promise.all(frameLoads);
-
-      if (!isCancelled) {
-        setAvatarFramesReady(true);
-      }
-    };
-
-    preloadFrames();
-
-    return () => {
-      isCancelled = true;
-    };
   }, []);
 
   useEffect(() => {
-    avatarAnimationTimeouts.current.forEach((timeoutId) =>
-      window.clearTimeout(timeoutId)
-    );
-    avatarAnimationTimeouts.current = [];
+    // The rest frame for the current theme is already painted by CSS, so the
+    // very first pass has nothing to animate.
+    if (!hasPlayedInitialTheme.current) {
+      hasPlayedInitialTheme.current = true;
+      return;
+    }
 
-    const finalFrame =
-      theme === "light"
-        ? avatarTransitionFrames[avatarTransitionFrames.length - 1]
-        : avatarTransitionFrames[0];
+    const stage = stageRef.current;
+    const sprite = spriteRef.current;
 
-    const jumpToFrame = (src: string) => {
-      setLayerA(src);
-      setLayerB(src);
-      setActiveIsA(true);
+    if (!stage || !sprite || !spriteImageRef.current || reduceMotion) {
+      return;
+    }
+
+    const forward = theme === "light";
+    const startedAt = performance.now();
+    let frameRequest = 0;
+
+    stage.dataset.transitioning = "true";
+
+    // Index comes from elapsed time rather than a counter, so a slow device
+    // drops frames instead of stretching the transition.
+    const step = (now: number) => {
+      const elapsed = Math.floor((now - startedAt) / FRAME_MS);
+      const index = Math.min(FRAME_COUNT - 1, elapsed);
+
+      sprite.style.backgroundPosition =
+        FRAME_POSITIONS[forward ? index : FRAME_COUNT - 1 - index];
+
+      if (index < FRAME_COUNT - 1) {
+        frameRequest = requestAnimationFrame(step);
+      } else {
+        stage.dataset.transitioning = "false";
+      }
     };
 
-    if (!hasHydratedTheme.current) {
-      jumpToFrame(finalFrame);
-      hasHydratedTheme.current = true;
-      return;
-    }
-
-    if (!avatarFramesReady) {
-      jumpToFrame(finalFrame);
-      return;
-    }
-
-    avatarFrameMap[theme].forEach((frame, index) => {
-      const timeoutId = window.setTimeout(() => {
-        if (index % 2 === 0) {
-          setLayerB(frame);
-          requestAnimationFrame(() => setActiveIsA(false));
-        } else {
-          setLayerA(frame);
-          requestAnimationFrame(() => setActiveIsA(true));
-        }
-      }, index * 40);
-
-      avatarAnimationTimeouts.current.push(timeoutId);
-    });
+    frameRequest = requestAnimationFrame(step);
 
     return () => {
-      avatarAnimationTimeouts.current.forEach((timeoutId) =>
-        window.clearTimeout(timeoutId)
-      );
-      avatarAnimationTimeouts.current = [];
+      cancelAnimationFrame(frameRequest);
+      stage.dataset.transitioning = "false";
     };
-  }, [theme, avatarFramesReady]);
+  }, [theme, reduceMotion]);
 
   return (
     <section
@@ -734,9 +684,16 @@ export default function Hero() {
                 style={{ background: "var(--hero-avatar-glow)" }}
               />
 
-              {/* Fixed portrait stage keeps all transition frames visually stable */}
+              {/*
+                Fixed portrait stage. The rest images are held between
+                transitions and swapped by CSS on [data-theme], so the correct
+                one paints before hydration; the sprite layer only takes over
+                while the morph is playing.
+              */}
               <motion.div
-                className="relative z-10 aspect-[3375/4219] w-full cursor-pointer overflow-hidden"
+                ref={stageRef}
+                data-transitioning="false"
+                className="avatar-stage relative z-10 aspect-[3375/4219] w-full cursor-pointer overflow-hidden"
                 whileHover={{
                   scale: 1.02,
                   transition: { duration: 0.3 },
@@ -744,25 +701,20 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
               >
                 <img
-                  src={layerA}
+                  src="/images/avatar-rest-dark.webp"
                   alt={personalInfo.name}
-                  className={`absolute inset-0 h-full w-full drop-shadow-2xl transition-opacity ease-linear ${
-                    isCoverFrame(layerA)
-                      ? "object-cover object-bottom"
-                      : "object-contain object-bottom"
-                  }`}
-                  style={{ opacity: activeIsA ? 1 : 0, transitionDuration: "40ms" }}
+                  className="avatar-rest avatar-rest-dark"
                 />
                 <img
-                  src={layerB}
+                  src="/images/avatar-rest-light.webp"
                   alt=""
                   aria-hidden="true"
-                  className={`absolute inset-0 h-full w-full drop-shadow-2xl transition-opacity ease-linear ${
-                    isCoverFrame(layerB)
-                      ? "object-cover object-bottom"
-                      : "object-contain object-bottom"
-                  }`}
-                  style={{ opacity: activeIsA ? 0 : 1, transitionDuration: "40ms" }}
+                  className="avatar-rest avatar-rest-light"
+                />
+                <div
+                  ref={spriteRef}
+                  aria-hidden="true"
+                  className="avatar-sprite"
                 />
               </motion.div>
             </div>
